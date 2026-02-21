@@ -1,0 +1,44 @@
+baseURL = "https://enrell.github.io/myblog/"
+languageCode = "en-us"
+title = "Enrell's Blog"
+theme = "LoveIt"
+
+[author]
+  name = "enrell"
+  link = "https://github.com/enrell"
+
+[params]
+  title = "Enrell's Blog"
+  
+  [params.footer]
+    enable = true
+    hugo = true
+    copyright = true
+    author = true
+    since = 2026
+    license = "MIT"
+
+  dateFormat = "2006-01-02"
+  enableDarkMode = true
+
+  [params.social]
+    Github = "enrell"
+
+  [params.home]
+    subtitle = "Developer, Creator, Open Source Enthusiast"
+    showSocial = true
+    showRecentPosts = true
+
+  [params.theme]
+    colorMode = "light"
+    showToggle = true
+
+[markup]
+  [markup.highlight]
+    noClasses = false
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
