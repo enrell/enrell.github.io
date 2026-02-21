@@ -46,7 +46,7 @@ enableGitInfo = true
     rss = 10
     [params.home.profile]
       enable = true
-      avatarURL = "/images/avatar.png"
+      avatarURL = "https://avatars.githubusercontent.com/u/60587839?v=4"
       title = "enrell"
       subtitle = "Developer, Creator, Open Source Enthusiast"
       typeit = true
