@@ -3,11 +3,9 @@ languageCode = "en-us"
 title = "Enrell's Blog"
 theme = "LoveIt"
 
-[build]
-  writeStats = true
-
-[excludedTemplates]
-  = ["**/exampleSite/**"]
+[caches]
+  [caches.images]
+    dir = ":cacheDir/images"
 
 [author]
   name = "enrell"
