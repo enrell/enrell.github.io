@@ -1,4 +1,4 @@
-baseURL = "/"
+baseURL = "/myblog/"
 
 languageCode = "en-us"
 title = "Enrell's Blog"
