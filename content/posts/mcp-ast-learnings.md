@@ -94,8 +94,6 @@ AST is used in many programming languages to represent the structure of the code
 
 [Typescript AST viewer site](https://ts-ast-viewer.com/#code/GYVwdgxgLglg9mABACwKYBt1wBQEpEDeAUIqYgE6pQjlIQIDOc6qAdFgObYBEAEhlgA0iAO5xy6ACYBCbrgDcRAL5E0mHLiA)
 
-![AST](/assets/ast/ast.png)
-
 # Why i'm study MCP and AST?
 
 Because I'm working on [ast-mcp](https://github.com/enrell/ast-mcp.git), a MCP for AST operations, providing a server for LLMs to interact with ASTs.
