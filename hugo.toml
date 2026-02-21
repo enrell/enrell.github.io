@@ -3,6 +3,12 @@ languageCode = "en-us"
 title = "Enrell's Blog"
 theme = "LoveIt"
 
+[build]
+  writeStats = true
+
+[excludedTemplates]
+  = ["**/exampleSite/**"]
+
 [author]
   name = "enrell"
   link = "https://github.com/enrell"
