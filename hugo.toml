@@ -22,6 +22,7 @@ enableGitInfo = true
   
   [params.app]
     title = "Enrell's Blog"
+    noFavicon = false
     themeColor = "#ffffff"
     iconColor = "#1e1e2e"
     tileColor = "#1e1e2e"
