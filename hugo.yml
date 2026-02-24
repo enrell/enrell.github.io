@@ -101,7 +101,21 @@ params:
   UseHugoToc: true
   disableSpecial1stPost: false
   disableScrollToTop: false
-  comments: false
+  comments: true
+  commentsjs: true
+  giscus:
+    repo: "enrell/enrell.github.io"
+    repoID: "R_kgDORVPJmw"
+    category: "Comments"
+    categoryID: "DIC_kwDO48007649"
+    mapping: "pathname"
+    strict: "0"
+    reactionsEnabled: "1"
+    emitMetadata: "0"
+    inputPosition: "bottom"
+    theme: "preferred_color_scheme"
+    lang: "en"
+    loading: "lazy"
   hidemeta: false
   hideSummary: false
   showtoc: false

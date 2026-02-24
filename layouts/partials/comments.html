@@ -1,0 +1,22 @@
+{{- /* Comments area start */ -}}
+{{- if (.Param "comments") }}
+<div class="comments-section">
+    <script src="https://giscus.app/client.js"
+        data-repo="{{ site.Params.giscus.repo }}"
+        data-repo-id="{{ site.Params.giscus.repoID }}"
+        data-category="{{ site.Params.giscus.category }}"
+        data-category-id="{{ site.Params.giscus.categoryID }}"
+        data-mapping="{{ site.Params.giscus.mapping }}"
+        data-strict="0"
+        data-reactions-enabled="{{ site.Params.giscus.reactionsEnabled }}"
+        data-emit-metadata="{{ site.Params.giscus.emitMetadata }}"
+        data-input-position="{{ site.Params.giscus.inputPosition }}"
+        data-theme="{{ site.Params.giscus.theme }}"
+        data-lang="{{ site.Params.giscus.lang }}"
+        data-loading="{{ site.Params.giscus.loading }}"
+        crossorigin="anonymous"
+        async>
+    </script>
+</div>
+{{- end }}
+{{- /* Comments area end */ -}}
