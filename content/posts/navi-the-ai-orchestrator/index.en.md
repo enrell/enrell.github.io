@@ -2,96 +2,95 @@
 date: '2026-02-23'
 lastmod: '2026-02-23'
 author: 'enrell'
-tags: ['navi', 'openclaw', 'ai-orchestrator', 'go', 'hexagonal-architecture', 'ports-and-adapters']
-categories: ['AI Orchestrators', 'Go Programming', 'Software Architecture']
+tags: ['navi', 'openclaw', 'ai-orchestrator', 'go', 'hexagonal-architecture', 'ai']
+categories: ['Go', 'Navi']
 draft: false
-title: 'Making Navi a truly useful and secure AI orchestrator'
-description: 'Navi is a powerful, high-performance AI orchestrator built with Go that supports multiple interaction modes: TUI, API, and messaging bots (Discord, Telegram). It features a hexagonal architecture (Ports and Adapters) for maximum flexibility and testability.'
+title: "I'm building Navi: a truly secure and useful AI orchestrator | cry about it openclaw"
+description: 'Rambling about a prototype I call Navi, which will be an AI orchestrator built in Go supporting multiple interaction modes: TUI, API, and messaging bots (Discord, Telegram). It features a hexagonal architecture (ports and adapters) for maximum flexibility and testability.'
 ---
 
 # Hello world guys!
 
-The TL;DR is: I tested openclaw and other AI orchestrators and they always follow the same pattern:
+The TL;DR is: I've tested openclaw and other AI orchestrators, and they always follow the exact same pattern:
 
-> They are built as a product for sale, not as an open-source project for the community. They are built for the hype and by the hype, with a generic idea of agency, a product that has a bunch of features, skills, etc., but in the end, they are not that useful because they are not created to solve real problems, but for sale, for hype, marketing, and to sell subscriptions from big techs.
+> They are built as products to be sold, not as open-source projects for the community. They are created by the hype and for the hype, pushing a generic idea of "agency"—a bloated product with a bunch of features and skills that, at the end of the day, aren't even that useful. That's because they aren't built to solve real problems; they're built for marketing and to sell big tech subscriptions. 
+That's exactly why OpenAI hired Peter Steinberger—a classic acqui-hire just to have another avenue to sell their API keys and subscriptions, not to solve actual problems.
 
-That's why OpenAI hired Peter Steinberger, a classic acqui-hire to have a way to sell their API keys and subscriptions, not to solve real problems.
-
-I can cite examples of projects that follow the same pattern:
+I can name a few projects that follow this exact pattern:
 
 - Windsurf
 - Adept
 - Covariant
 
-All hyped as "next generation of agents/coding/robotics". Google, Amazon and Meta do licensing and take founders/team.
+All hyped up as the "next generation of agents/coding/robotics". Google, Amazon, and Meta swoop in with licensing deals and poach the founders/team.
 
-Result: startups become "ghost company" or skeleton crew. Employees cry in all-hands, product dies or becomes irrelevant, while the team goes to work for big tech's models/cloud.
+The result? The startups turn into ghost companies or run on skeleton crews. Employees cry in all-hands meetings, and the product dies or fades into irrelevance while the team goes off to work on big tech clouds/models.
 
-# The Navi differential
+# Navi's differentiator
 
-I raised useless points about openclaw, you must be wondering, why am I trashing openclaw, and not other AI orchestrators, and the answer is simple, because openclaw is the most popular, the most hyped, the most sold, and the most used, and therefore it is the best example to illustrate. Who is in the tech bubble and has never heard of openclaw in the last weeks is living in a cave.
+> Navi's purpose is to be a useful, secure agent orchestrator built for the tech/dev community.
 
-I don't deny that I am in a bubble, and that LLMs are a bubble, that can burst at any moment, and that the AI winter will come sooner or later. But what I want to say is that, even if it is a bubble, and even if the hype is big, and even if big techs are investing heavily, some companies will survive, open-source models will continue to exist, because there is actually real value, there is real demand, it's just not the kind of value and demand that big techs are selling, but a more niche, more specific, more real, more useful value and demand, and that is what Navi aims to survive the bubble burst.
+I've pointed out some useless aspects of openclaw, and you might be wondering why I'm thrashing openclaw specifically instead of other AI orchestrators. The answer is simple: because openclaw is the most popular, the most hyped, the most sold, and the most used right now. It’s the perfect example. Anyone in the tech bubble who hasn't heard of openclaw in the last few weeks has been living under a rock.
 
-I believe the bubble will burst, and the companies that survive will be those that really deliver value, whether it's a product, a service, or base models.
-LLM is a technology that has utility, mainly in these areas (not in order):
+I won't deny that I'm in a bubble, that LLMs form a bubble that could pop at any minute, and that an AI winter will arrive sooner or later. But my point is: even if it is a bubble, even with all the hype and massive big tech investments, some companies will survive and open-source models will stick around. That's because there *is* real value and real demand; it's just not the kind of value and demand big tech is trying to sell. It's a more niche, specific, real, and useful demand. And that’s Navi's goal: to survive the bubble bursting.
 
-## The usefulness of agents
+I believe the bubble will pop, and the companies that survive will be the ones actually delivering value, whether that's a product, a service, or foundation models.
+LLMs are highly useful technologies, especially in these areas (in no particular order):
 
-Never been so easy to get a project off the ground. Test ideas, learn a new framework or just do some "vibe coding" to see if a product stands up got bizarrely fast. The trap here is for those who just copy and paste without understanding what's going on under the hood. (If you want to escape this and learn something useful, see this post: how to use LLMs correctly).
+## The utility of agents
 
-Customer support without headaches. Forget those dumb bots from the old days. An intelligent agent integrated into WhatsApp or internal systems solves 60% to 80% of daily headaches 24/7. I have friends who have worked in support and the real is one: 90% of problems are trivial things, often from elderly people or those with zero digital literacy. AI solves this without sweating.
+**Software Development:** It has never been easier to get a project off the ground. Testing ideas, learning a new framework, or just doing some "vibe coding" to see if a product holds up has become absurdly fast. The trap here is for those who just copy and paste without understanding what's going on under the hood. (If you want to avoid that and learn something useful, check out this post: *how to use LLMs the right way*).
 
-Sales and Marketing at scale (without sounding like a robot). You can automate from lead qualification (SDR agents) to cart recovery and call analysis. It's generating content and sending personalized emails en masse, but that still sound natural.
+**Headache-free Customer Support:** Forget those dumb bots from the past. A smart agent integrated into WhatsApp or internal systems handles 60% to 80% of the daily grind, 24/7. I have friends who have worked in support, and the reality is: 90% of issues are mundane things, often from the elderly or people with zero digital literacy. AI handles this without breaking a sweat.
 
-Finding things in your own company (the famous RAG): You know that huge legacy documentation or internal policies that no one knows where they are? Put an internal chat pointing to it. If well implemented, documenting and querying company knowledge becomes trivial.
+**Sales and Marketing at scale (without sounding like a robot):** You can automate everything from lead qualification (SDR agents) to abandoned cart recovery and call analysis. It’s about generating content and sending personalized mass emails that actually sound natural.
 
-Cybersecurity and Blue/White Hats: Analyzing logs by hand is boring and repetitive. A well-tuned model can chew logs, detect threats, do a superficial pentest and generate a report real quick. It's an absurd helping hand for those working in security and need to reduce incident response time.
+**Finding things within the company (the famous RAG):** You know that massive legacy documentation or internal policies nobody knows where to find? Point an internal chat at it. If implemented well, documenting and querying company knowledge becomes trivial.
 
-Despite all the benefits agents bring, most people have an exaggerated view of agents, most of the time they give superpowers that these agents shouldn't have. The trick is to think that agents solve everything, and it couldn't be more wrong, they should be part of the process, not take the entire process for themselves.
+**Cybersecurity and Blue/White Hats:** Parsing logs by hand is boring and repetitive. A well-tuned model can chew through logs, detect threats, run superficial pentests, and generate reports in no time. It's an absolute lifesaver for security folks who need to reduce incident response times.
 
-## The security
+Despite all the benefits agents bring, most people have an exaggerated view of them and, more often than not, give them superpowers they shouldn't have. The catch is thinking that agents can solve *everything*. That couldn't be further from the truth: they should be *part* of the process, not take over the entire process.
 
-One of the saddest things in the current tech bubble is security neglect, it doesn't need to be enterprise level, but it should be solid, have the minimum responsibility.
-Don't be like certain devs, don't upload a hobby project with open doors, credentials in plaintext and one-click Remote Code Execution, even explicitly warning several times is not enough, it's the recipe for disaster.
+## Security
 
-## Navi project
+One of the saddest things in the tech bubble right now is the sheer negligence regarding security. It doesn't need to be enterprise-grade, but it has to be solid; have a minimum level of responsibility. 
+Don't be like certain devs: don't deploy a hobby project with open ports, plaintext credentials, and 1-click Remote Code Execution. Even explicitly warning people multiple times isn't enough—it's a recipe for disaster.
 
-After this extensive venting it's time to talk about the project that has been pulsing in my mind, Navi. The idea came years ago as a personal project (clearly I'm late right? XD), I always sought automation in my development environment, be it self-hosted applications, CLI tools, and automation scripts, but I was never satisfied with how automation was done, and I discovered why.
+## The Navi project
 
-Task automation on Linux is extremely decentralized, which means we have many automation tools, but they don't communicate natively and standardized. You have a bash script for one thing, a cronjob for another, and several excellent CLI tools that require you to make ugly "glue code" to make one talk to the other. The tools don't talk to each other, and they shouldn't for security reasons.
+After that extensive rant, it's time to talk about the project that's been pulsing in my mind: Navi. The idea came to me years ago as a personal project (I'm clearly late to the party, right? XD). I've always looked for ways to automate my dev environment, whether it was self-hosted apps, CLI tools, or automation scripts, but I was never satisfied with *how* the automation was done, and I figured out why.
 
-Navi is born exactly to be that link, the conductor of this orchestra, but with a golden rule: control is always yours and security is non-negotiable. He is not a "magical autonomous agent" that will run a rm -rf / because he hallucinated in the middle of a task or misinterpreted a loose prompt.
+Task automation, especially on Linux, is extremely decentralized. This means we have plenty of automation tools, but they don't communicate natively or in a standardized way. You have a bash script for one thing, a cronjob for another, and several excellent CLI tools that require you to write ugly "glue code" just to make them talk to each other. The tools don't talk to each other, and they shouldn't, for security reasons.
 
-The name came from NAVI a computer from the anime [Serial Experiments Lain (1998)](https://anilist.co/anime/339/serial-experiments Lain/) one of my favorite animes, I recommend watching, it is dense, intellectual and philosophical, anyway, this computer is used by the protagonist `Lain` to access the Wired (the ultra-advanced global network of the anime, kind of an internet that mixes virtual reality, collective consciousness and much more). NAVI is the set of hardware + software to access the wired. It has a navigation and voice interface.
+Navi was born exactly to be that link, the maestro of this orchestra, but with one golden rule: you are always in control, and security is non-negotiable. It's not a "magical autonomous agent" that will run `rm -rf /` because it hallucinated mid-task or misinterpreted a loose prompt.
+
+The name comes from NAVI, a computer from the anime [Serial Experiments Lain (1998)](https://anilist.co/anime/339/serial-experiments-lain/). It's one of my favorite anime and I highly recommend it: it's dense, intellectual, and philosophical. Anyway, this computer is used by the protagonist, Lain, to access the Wired (the ultra-advanced global network in the anime, sort of like an internet that mixes virtual reality, collective consciousness, and much more). NAVI is the hardware + software bundle to access the Wired. It features both navigation-based and voice-based interfaces.
 
 NAVI: 
 ![navi screen](navi-1.png) 
 
-She does an insane upgrade on NAVI:
+She does an insane upgrade to her NAVI:
 ![navi screen](navi-2.png)
 
-> The purpose of Navi is to be a useful, secure AI orchestrator for the tech/dev community.
-
 # Navi's Architecture
-To ensure the project is robust, scalable and, above all, testable, I chose to write Navi in Go. Besides delivering absurd performance and compiling everything into a single binary (which makes life much easier on Linux), Go allows me to handle concurrency in a very elegant and direct way.
+To ensure the project is robust, scalable, and above all, testable, I chose to write Navi in Go. Besides delivering absurd performance and compiling everything into a single binary (which makes life on Linux so much easier), Go allows me to handle concurrency in a very elegant and straightforward way.
 
-The project is based on Hexagonal Architecture (Ports and Adapters).
+The foundation of the project follows the Hexagonal Architecture (Ports and Adapters).
 
-This means that Navi's core intelligence and orchestration is completely isolated from external tools and interfaces. If tomorrow I want to change the LLM provider, the local database, or the way it executes a script on my operating system, I just write a new "adapter". The business logic remains intact and isolated from side effects.
+This means Navi's core intelligence and orchestration are completely isolated from external tools and interfaces. If tomorrow I want to swap out the LLM provider, the local database, or how it executes a script on my OS, I just write a new "adapter". The business logic remains intact and isolated from side effects.
 
 ## How do you interact with it?
 
-As I said at the beginning, Navi doesn't trap you with a heavy proprietary web interface that tries to push you a subscription, or an agent that will expose your credentials. It was designed to have multiple entry points (the Ports of our architecture):
+As I mentioned at the beginning, Navi doesn't lock you into a heavy, proprietary web UI that tries to shove a subscription down your throat, nor is it an agent that will expose your credentials. It was designed to have multiple entry points (the Ports in our architecture):
 
-> TUI (Terminal User Interface): For those who live in the terminal (and those who use Neovim and a window manager like Sway know the value of not having to take their hand off the keyboard), having a fast, beautiful, and responsive interface right in the console is essential.
+> **TUI (Terminal User Interface):** For terminal dwellers (and anyone who uses Neovim and a window manager like Sway knows the value of never having to take your hands off the keyboard), having a fast, beautiful, and responsive interface right in the console is essential.
 
-> REST/gRPC API: If you want to integrate Navi into another system, create your own frontend, or trigger webhooks from other applications, the door is open.
+> **REST/gRPC API:** If you want to integrate Navi into another system, build your own frontend, or trigger webhooks from other applications, the door is open.
 
-> Messaging Bots: Native integration with Discord and You can trigger automations on your server or home machine by sending a message from your phone, authenticated and securely.
+> **Messaging Bots:** Native integration with Discord and Telegram. You can trigger automations on your server or your home machine by sending a text from your phone, in a secure and authenticated way.
 
-The roadmap is still being drawn, and the core is being developed. The idea is to build something open-source, focusing on solving real productivity and system orchestration problems, without selling your soul to the hype.
+The roadmap is still being drawn up, and the core is currently under development. The goal is to build something open-source, focusing on solving real productivity and system orchestration problems, without selling our souls to the hype.
 
-Soon I'll release the repository on GitHub for those who want to take a look at the code (or give some pointers in the PRs). Until then, keep coding!
+I'll be dropping the GitHub repository soon for anyone who wants to take a look at the code (or chip in on the PRs). Until then, we keep coding!
 
 -- Present day, present time! hahahahaha

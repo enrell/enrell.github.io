@@ -4,7 +4,7 @@ lastmod: '2026-02-23'
 author: 'enrell'
 tags: ['navi', 'openclaw', 'ai-orchestrator', 'go', 'hexagonal-architecture', 'ai']
 categories: ['Go', 'Navi']
-draft: true
+draft: false
 title: 'Eu estou fazendo o Navi um orquestrador de AI seguro e útil de verdade | chora openclaw'
 description: 'Devagando um protótipo que chamo de Navi, que vai ser um orquestrador de IA construído com Go que suporta vários modos de interação: TUI, API e bots de mensagens (Discord, Telegram). Ele apresenta uma arquitetura hexagonal (portas e adaptadores) para máxima flexibilidade e testabilidade.'
 ---
