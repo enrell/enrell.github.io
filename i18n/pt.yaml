@@ -1,0 +1,60 @@
+- id: prev_page
+  translation: "Anterior"
+
+- id: next_page
+  translation: "Próxima"
+
+- id: read_time
+  translation:
+    one : "1 min de leitura"
+    other: "{{ .Count }} min de leitura"
+
+- id: words
+  translation:
+    one : "palavra"
+    other: "{{ .Count }} palavras"
+
+- id: toc
+  translation: "Índice"
+
+- id: translations
+  translation: "Traduções"
+
+- id: home
+  translation: "Início"
+
+- id: edit_post
+  translation: "Editar"
+
+- id: code_copy
+  translation: "copiar"
+
+- id: code_copied
+  translation: "copiado!"
+
+- id: search
+  translation: "Buscar"
+
+- id: search_placeholder
+  translation: "Digite para buscar..."
+
+- id: print
+  translation: "Imprimir"
+
+- id: reading_time
+  translation: "Tempo de leitura"
+
+- id: views
+  translation: "visualizações"
+
+- id: author
+  translation: "Autor"
+
+- id: published
+  translation: "Publicado"
+
+- id: modified
+  translation: "Modificado"
+
+- id: word_count
+  translation: "Contagem de palavras"

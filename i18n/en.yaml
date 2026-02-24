@@ -1,0 +1,60 @@
+- id: prev_page
+  translation: "Prev"
+
+- id: next_page
+  translation: "Next"
+
+- id: read_time
+  translation:
+    one : "1 min read"
+    other: "{{ .Count }} min read"
+
+- id: words
+  translation:
+    one : "word"
+    other: "{{ .Count }} words"
+
+- id: toc
+  translation: "Table of Contents"
+
+- id: translations
+  translation: "Translations"
+
+- id: home
+  translation: "Home"
+
+- id: edit_post
+  translation: "Edit"
+
+- id: code_copy
+  translation: "copy"
+
+- id: code_copied
+  translation: "copied!"
+
+- id: search
+  translation: "Search"
+
+- id: search_placeholder
+  translation: "Type to search..."
+
+- id: print
+  translation: "Print"
+
+- id: reading_time
+  translation: "Reading time"
+
+- id: views
+  translation: "views"
+
+- id: author
+  translation: "Author"
+
+- id: published
+  translation: "Published"
+
+- id: modified
+  translation: "Modified"
+
+- id: word_count
+  translation: "Word count"

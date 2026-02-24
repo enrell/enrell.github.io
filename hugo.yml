@@ -4,9 +4,71 @@ theme: "PaperMod"
 paginate: 5
 
 languageCode: "en-us"
+defaultContentLanguage: en
+defaultContentLanguageInSubdir: true
 enableEmoji: true
 enableRobotsTXT: true
 enableGitInfo: true
+
+languages:
+  en:
+    languageName: "English"
+    languageCode: "en-us"
+    weight: 1
+    title: "Enrell's Blog"
+    params:
+      description: "Developer, Creator, Open Source Enthusiast - Building cool things with code"
+    menu:
+      main:
+        - identifier: home
+          name: Home
+          url: .
+          weight: 1
+        - identifier: search
+          name: Search
+          url: search
+          weight: 3
+        - identifier: posts
+          name: Posts
+          url: posts
+          weight: 2
+        - identifier: categories
+          name: Categories
+          url: categories
+          weight: 4
+        - identifier: tags
+          name: Tags
+          url: tags
+          weight: 5
+  pt:
+    languageName: "Português"
+    languageCode: "pt-br"
+    weight: 2
+    title: "Blog do Enrell"
+    params:
+      description: "Desenvolvedor, Criador, Entusiasta Open Source - Construindo coisas legais com código"
+    menu:
+      main:
+        - identifier: home
+          name: Início
+          url: .
+          weight: 1
+        - identifier: search
+          name: Buscar
+          url: search
+          weight: 3
+        - identifier: posts
+          name: Posts
+          url: posts
+          weight: 2
+        - identifier: categories
+          name: Categorias
+          url: categories
+          weight: 4
+        - identifier: tags
+          name: Tags
+          url: tags
+          weight: 5
 
 buildDrafts: false
 buildFuture: false
@@ -26,6 +88,8 @@ params:
   DateFormat: "January 2, 2006"
   defaultTheme: auto
   disableThemeToggle: false
+  displayFullLangName: true
+  languageDropdown: true
 
   ShowReadingTime: true
   ShowShareButtons: true
@@ -94,6 +158,17 @@ params:
   search:
     enable: true
     type: lunr
+    resultsPerPage: 10
+    showSummary: true
+    showDates: true
+    fuseOpts:
+      ignoreLocation: true
+      threshold: 0.4
+      keys:
+        - title
+        - permalink
+        - summary
+        - content
 
   page:
     enable: true
@@ -113,25 +188,6 @@ params:
     hidden: false
     hiddenInList: false
     hiddenInSingle: false
-
-menu:
-  main:
-    - identifier: home
-      name: Home
-      url: /
-      weight: 1
-    - identifier: posts
-      name: Posts
-      url: /posts/
-      weight: 2
-    - identifier: categories
-      name: Categories
-      url: /categories/
-      weight: 3
-    - identifier: tags
-      name: Tags
-      url: /tags/
-      weight: 4
 
 pygmentsUseClasses: true
 markup:

@@ -1,0 +1,126 @@
+/* Language Switcher Dropdown Styles */
+
+.lang-switch-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.lang-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 6px;
+    color: var(--entry-text-color);
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+
+.lang-toggle-btn:hover {
+    background-color: var(--hover-color);
+}
+
+.lang-toggle-btn svg {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+}
+
+.current-lang {
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+.lang-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    min-width: 100px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    list-style: none;
+    margin: 0;
+    padding: 6px;
+    z-index: 1000;
+}
+
+.lang-switch-dropdown.open .lang-dropdown-menu,
+.lang-switch-dropdown:focus-within .lang-dropdown-menu {
+    display: block;
+}
+
+.lang-dropdown-menu li {
+    margin: 0;
+    padding: 2px 0;
+}
+
+.lang-dropdown-menu a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    color: var(--entry-text-color);
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.lang-dropdown-menu a:hover {
+    background-color: var(--hover-color);
+    color: var(--primary-color);
+}
+
+.lang-dropdown-menu a.active {
+    background-color: var(--primary-color);
+    color: var(--primary-text-color);
+}
+
+.lang-dropdown-menu a.active:hover {
+    opacity: 0.9;
+}
+
+/* Hide default PaperMod language switcher when using dropdown */
+ul.lang-switch {
+    display: none !important;
+}
+
+/* Positioning in header */
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    max-width: calc(var(--nav-width) + var(--gap) * 2);
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    line-height: var(--header-height);
+}
+
+.nav .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-switches {
+    display: inline-flex;
+    margin: auto 0;
+}
+
+.lang-switch-dropdown {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin-left: auto;
+}

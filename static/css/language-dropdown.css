@@ -1,0 +1,124 @@
+/* Positioning in header */
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    max-width: calc(var(--nav-width) + var(--gap) * 2);
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    line-height: var(--header-height);
+}
+
+.nav .logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-switches {
+    display: inline-flex;
+    margin: auto 0;
+}
+
+/* Hide default PaperMod language switcher */
+ul.lang-switch {
+    display: none !important;
+}
+
+/* Language Switcher Dropdown Styles */
+.lang-switch-dropdown {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin-left: auto;
+}
+
+.lang-toggle-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 6px;
+    color: var(--entry-text-color);
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+
+.lang-toggle-btn:hover,
+.lang-switch-dropdown:focus-within .lang-toggle-btn {
+    background-color: var(--hover-color);
+}
+
+.lang-toggle-btn svg {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+}
+
+.current-lang {
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+}
+
+.lang-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    min-width: 130px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    list-style: none;
+    margin: 4px 0 0 0;
+    padding: 6px;
+    z-index: 1000;
+}
+
+/* Exibe o menu no foco, com a classe .open (do seu JS) ou no hover */
+.lang-switch-dropdown.open .lang-dropdown-menu,
+.lang-switch-dropdown:focus-within .lang-dropdown-menu,
+.lang-switch-dropdown:hover .lang-dropdown-menu {
+    display: block;
+}
+
+.lang-dropdown-menu li {
+    margin: 0;
+    padding: 0;
+}
+
+.lang-dropdown-menu a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    color: var(--entry-text-color);
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 400;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+.lang-dropdown-menu a:hover {
+    background-color: var(--hover-color);
+    color: var(--primary-color);
+}
+
+.lang-dropdown-menu a.active {
+    background-color: var(--primary-color);
+    color: var(--primary-text-color);
+}
+
+.lang-dropdown-menu a.active:hover {
+    opacity: 0.9;
+}
