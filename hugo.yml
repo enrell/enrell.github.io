@@ -44,9 +44,9 @@ languages:
     languageName: "Português"
     languageCode: "pt-br"
     weight: 2
-    title: "Blog do Enrell"
+    title: "Enrell's Blog"
     params:
-      description: "Desenvolvedor, Criador, Entusiasta Open Source - Construindo coisas legais com código"
+      description: "Desenvolvedor, Criador, Entusiasta Open Source"
     menu:
       main:
         - identifier: home

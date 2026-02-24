@@ -80,7 +80,7 @@ ul.lang-switch {
     top: 100%;
     right: 0;
     min-width: 130px;
-    background-color: var(--bg-color);
+    background-color: #5555;
     border: 1px solid var(--border-color);
     border-radius: 8px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
