@@ -2,7 +2,7 @@
 date: '2026-02-23'
 lastmod: '2026-02-23'
 author: 'enrell'
-tags: ['navi', 'openclaw', 'ai-orchestrator', 'go', 'hexagonal-architecture', 'ai']
+tags: ['navi', 'openclaw', 'go', 'hexagonal-architecture', 'ai']
 categories: ['Go', 'Navi']
 draft: false
 title: "I'm building Navi: a truly secure and useful AI orchestrator | cry about it openclaw"
