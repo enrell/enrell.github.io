@@ -1,11 +1,11 @@
-{{- /* Head custom content area start */ -}}
-<link rel="stylesheet" href="{{ "css/language-dropdown.css" | relURL }}">
-<script src="{{ "js/language-detector.js" | relURL }}"></script>
-<script src="{{ "js/language-dropdown.js" | relURL }}"></script>
-{{- /* Head custom content area end */ -}}
-
 <header class="header">
     <nav class="nav">
+        <button id="nav-menu-toggle" class="nav-menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
         <div class="logo">
             {{- $label_text := (site.Params.label.text | default site.Title) }}
             {{- if site.Title }}
