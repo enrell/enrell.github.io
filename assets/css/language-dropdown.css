@@ -17,6 +17,8 @@
     color: var(--entry-text-color);
     font-size: 14px;
     transition: background-color 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .lang-toggle-btn:hover {
@@ -123,4 +125,21 @@ ul.lang-switch {
     display: inline-flex;
     align-items: center;
     margin-left: auto;
+    flex-shrink: 0;
+}
+
+@media (max-width: 640px) {
+    .current-lang {
+        display: none;
+    }
+
+    .lang-toggle-btn {
+        padding: 6px;
+    }
+
+    .lang-dropdown-menu {
+        right: 0;
+        left: auto;
+        min-width: 80px;
+    }
 }
