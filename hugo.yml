@@ -79,6 +79,8 @@ minify:
   minifyOutput: true
 
 params:
+  mainSections:
+    - posts
   env: production
   title: "Enrell's Blog"
   description: "Developer, Creator, Open Source Enthusiast - Building cool things with code"
