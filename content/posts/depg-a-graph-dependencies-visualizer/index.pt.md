@@ -6,73 +6,73 @@ tags: ['cli', 'rust', 'depg']
 categories: ['rust', 'depg']
 draft: false
 title: "Estamos Voando às Cegas: Por Que Construí um Visualizador de Grafo de Dependências em Rust"
-description: 'Eu criei uma CLI para visualizar um grafo de dependências para repositórios de código.'
+description: 'Criei uma CLI para visualizar o grafo de dependências das nossas bases de código.'
 ---
 
-Recentemente, eu assisti a um vídeo do Veritasium chamado "The Internet Was Weeks Away From Disaster and No One Knew" (A Internet Estava a Semanas do Desastre e Ninguém Sabia). Ele mergulha fundo na história do backdoor do XZ Utils — uma campanha de engenharia social altamente sofisticada e de vários anos que quase comprometeu o OpenSSH e todo o ecossistema de código aberto. Um ator malicioso passou anos ganhando confiança, lentamente introduzindo commits maliciosos em uma biblioteca de compressão profunda da qual todo o resto depende.
+Recentemente, assisti a um vídeo do canal Veritasium chamado "The Internet Was Weeks Away From Disaster and No One Knew" (A Internet Estava a Semanas do Desastre e Ninguém Sabia). O vídeo detalha a história do "backdoor" no XZ Utils — um ataque de engenharia social incrivelmente inteligente que durou anos e quase comprometeu o OpenSSH, junto com grande parte da comunidade de código aberto. O invasor passou anos conquistando confiança e começou a inserir código malicioso, aos poucos, dentro de uma biblioteca de compressão super específica que é base para muitas outras ferramentas fundamentais.
 
-Enquanto assistia a esse vídeo, a ideia para este projeto me veio à mente. Estivemos a centímetros de uma catástrofe global, e isso me fez pensar.
+Assistindo a esse vídeo, a ideia para este projeto surgiu. Passamos bem perto de uma catástrofe global nas redes, e isso me fez refletir.
 
-Quantos de nós realmente sabemos o que estamos executando? Nós rodamos `npm install`, `cargo build` ou `bun install`, e vemos o terminal acender com centenas de pacotes sendo baixados. Tratamos o `node_modules` ou as pastas de build como uma caixa-preta. É como plugar seu cérebro diretamente na Wired sem verificar se a conexão está comprometida. Se uma dependência central for sequestrada, somos todos alvos fáceis.
+No fundo, quantos de nós realmente entendemos o conteúdo que estamos rodando? Temos a rotina de rodar `npm install`, `cargo build` ou `bun install`, e só assistimos ao terminal enlouquecer com downloads. O `node_modules` – e pastas do tipo – acabaram virando caixas-pretas completas para nós. O equivalente a você conectar sua cabeça diretamente in "The Wired" e não checar nenhuma de suas rotas. Se uma única dependência vital for comprometida, basicamente não teríamos para onde fugir.
 
-Eu odeio voar às cegas. Quando trabalho em um projeto, quero ver o sistema nervoso. Quero olhar para o grafo de dependências e ver onde estão os elos fracos, de onde vem o inchaço e o que exatamente estou convidando para minha máquina.
+Eu não gosto de agir às cegas ou no escuro. Minha vibe trabalhando nos projetos passa por entender o ecossistema ali dentro. Gosto de ver de onde vêm os exageros, checar a estrutura geral dessas dependências e os elos frágeis – compreender de perto quem e o que eu estou puxando pra rodar na minha máquina.
 
-Então, eu construí algo para consertar isso.
+Sendo assim, resolvi criar algo que lidasse com isso.
 
-### Entra o `depg` (Dependency Graph)
+### Conheça o `depg` (Grafo de Dependências)
 
-Eu queria uma maneira localizada e incrivelmente rápida de visualizar exatamente do que o meu projeto depende. Nada de fazer upload do meu Cargo.lock para um serviço web de terceiros duvidoso. Apenas uma ferramenta CLI limpa e instantânea que roda localmente e mapeia toda a árvore de dependências em um grafo interativo.
+Meu objetivo era ter uma ferramenta absurdamente rápida e local para mapear tudo que um projeto tem de dependência. Nada daquelas doideiras de ficar exportando seu arquivo "Cargo.lock" para serviços web aleatórios de terceiros – apenas uma ferramenta CLI robusta, direta e local capaz de rastrear as árvores de código, gerando um grafo visual completo e interativo em um segundo.
 
-Eu a construí em Rust (Edition 2024), naturalmente, porque se estamos construindo ferramentas de CLI, queremos que elas sejam rápidas, seguras de memória e consigam lidar com concorrência sem esforço.
+Codificar ela com Rust (Edition 2024) fluiu bem. Afinal, se formos focar em ferramentas pelo terminal (CLI), velocidade real, performance na memória das operações assíncronas e eficiência em recursos já devem ser prioridades garantidas.
 
-### Código Fonte & Instalação
+### Código Fonte & Como Instalar
 
-O código fonte está disponível em: [https://github.com/enrell/dependencies-graph](https://github.com/enrell/dependencies-graph)
+O código-fonte completo já está aberto aqui: [https://github.com/enrell/dependencies-graph](https://github.com/enrell/dependencies-graph)
 
-**macOS / Linux:**
+**Para macOS ou Linux:**
 ```sh
 curl -fsSL https://raw.githubusercontent.com/enrell/dependencies-graph/main/install.sh | sh
 ```
 
-**Windows (PowerShell):**
+**Para Windows (com PowerShell):**
 ```powershell
 irm https://raw.githubusercontent.com/enrell/dependencies-graph/main/install.ps1 | iex
 ```
 
-**Cargo:**
+**Via Cargo:**
 ```sh
 cargo install --git https://github.com/enrell/dependencies-graph.git
 ```
 
-### Uso
+### Como Usar
 
 ```sh
 depg run
 depg run --depth 2 --port 8080 --open
 ```
 
-### Como Funciona
+### O Que Rola Por Baixo do Capô
 
-- O `depg` procura no diretório atual por arquivos de lock conhecidos.
-- Ele analisa toda a árvore de dependências, lidando com semânticas de resolução específicas de cada ecossistema.
-- Os dados do grafo são serializados e servidos através de um servidor web Axum embutido de alta performance.
-- O cliente busca o grafo e o renderiza instantaneamente num canvas responsivo guiado por física.
+- Ao chamar o `depg`, ele faz uma busca na sua localização por lockfiles comuns.
+- Ao encontrar, o CLI lê completamente as árvores e garante o suporte necessário baseando-se nas abordagens ecossistêmicas adequadas.
+- Estes dados dos grafos de dependências recebem serialização, viram uma estrutura pronta e são acessados junto a um servidor local super otimizado via web feito localmente por meio do Axum.
+- Já do lado da aplicação em renderizar este grafo, conseguimos acessar isso quase que instantâneo em uma área responsiva visual – tudo puxado com a força orientada com suporte à física local também.
 
-### Arquitetura
+### Aspectos da Arquitetura
 
-- **Núcleo do Backend**: Rust (Clap, Anyhow, Serde)
-- **Motor Extensível de Parser**: Construído usando um sistema de traits dinâmicas, tornando fácil plugar suporte a novas linguagens.
-- **Servidor Web**: Axum + Tokio (ativos estáticos compilados diretamente no binário).
-- **Motor do Frontend**: Vanilla JS + Cytoscape.js.
+- **Núcleo Interno**: Rust em formato puro garantindo solidez, usando Clap, Anyhow & Serde.
+- **Sistema Integrado do Parser**: Toda a estrutura aqui cresce via suporte das chamadas Traits tornando incrivelmente fácil incluir as próximas linguagens futuramente.
+- **Estruturação do Server**: Usa a estrutura Axum + modelagem sob o runtime Tokio (com arquivos fixos que fecham junto dentro da compilação de binários final).
+- **No lado Visual**: É a flexibilidade com Cytoscape.js rodando puramente no JS padrão sem pesar a máquina.
 
-Você roda um comando e pronto: seu navegador abre uma constelação das dependências do seu projeto, totalmente interativa e baseada em física. Você pode aplicar zoom, traçar caminhos e finalmente compreender a pura escala dos ombros em que seu código está apoiado.
+A ideia é: um único comando, no enter – e a diversão magicamente acontece visualizando os projetos no seu navegador padrão abrindo uma estrutura de conexões orgânica focada nessas dependências do código em poucos cliques. Poder acessar detalhes, e chegar exatamente mais fundo mapeando partes distantes que conectam no fundo toda e qualquer base de operações ali no seu trabalho.
 
-### Saber é Metade da Batalha
+### Saber Metade de Tudo
 
-Construir o `depg` não foi apenas sobre fazer um visualizador legal; foi sobre recuperar visibilidade. O backdoor do XZ provou que software de código aberto depende fortemente de confiança, mas confiança não deve significar ignorância voluntária.
+Isso que gerou o `depg` focou além em apenas fazer uns desenhos agradáveis. Era retornar com nosso controle visual de verdade para ver se o que colocavam com os escândalos daquelas partes envolvendo bibliotecas do backdoors do XZ na vida real podem parar nas portas desses grandes códigos fontes base abertos que nós temos plena certeza confiar antes e também se garantir que não somos completamente cegos para não acompanhar quem estamos absorvendo com tudo nas costas sem validar nada.
 
-Se tivermos as ferramentas para visualizar facilmente e auditar as raízes do nosso software, quem sabe poderemos identificar anomalias antes que cheguem a produção.
+Quando criamos as próprias formas ágeis de podermos observar os detalhes destas fiações visuais fundamentais – a premissa volta para tentar detectar coisas fora do padrão rapidamente um pouco antes dos processos alcançarem locais perigosos da operação de produções globais que operam essas ferramentas.
 
-Você pode checar o código fonte e tentar por si mesmo. Rode ele no seu maior projeto e me diga — o seu grafo de dependências parece uma cidade bem estruturada, ou uma confusão caótica?
+Verifiquem com os códigos de portas sempre abertas; testem rodar na base gigante dos seus trabalhos codificados – o local com os traços das estruturas se parecem hoje com bairros projetados logicamente organizados de prédios conectados bem ajustados ali? Ou aquilo mais já parece uma tempestade sem fim e de muito caos amarrado sem direção ali?
 
-Vejo você na Wired.
+See you in the The Wired.
