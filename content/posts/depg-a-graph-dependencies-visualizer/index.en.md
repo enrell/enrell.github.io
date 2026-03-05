@@ -9,6 +9,10 @@ title: "We Are Flying Blind: Why I Built a Dependency Graph Visualizer in Rust"
 description: 'I created a CLI to visualize a dependency graph for codebases.'
 ---
 
+![graph full](graph-1.png) 
+
+![graph node selection](graph-2.png) 
+
 Recently, I watched a Veritasium video called "The Internet Was Weeks Away From Disaster and No One Knew." It dives deep into the history of the XZ Utils backdoor—a highly sophisticated, multi-year social engineering campaign that almost compromised OpenSSH and the entire open-source ecosystem. A malicious actor spent years gaining trust, slowly pushing malicious commits into a deeply buried compression library that everything else depends on. 
 
 While I was watching that video, the idea for this project came to my mind. We were inches away from a global catastrophe, and it got me thinking.
