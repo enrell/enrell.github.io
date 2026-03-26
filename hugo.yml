@@ -1,7 +1,8 @@
 baseURL: "https://enrell.github.io/"
 title: "Enrell's Blog"
 theme: "PaperMod"
-paginate: 5
+pagination:
+  pagerSize: 5
 
 languageCode: "en-us"
 defaultContentLanguage: en
