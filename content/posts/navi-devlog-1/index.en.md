@@ -2,11 +2,11 @@
 date: '2026-03-02'
 lastmod: '2026-03-02'
 author: 'enrell'
-tags: ['navi', 'go', 'ai', 'orchestrator', 'mcp', 'tui', 'dotenv']
-categories: ['Go', 'Navi']
+tags: ['navi-agent', 'go', 'ai', 'orchestrator', 'mcp', 'tui', 'dotenv']
+categories: ['Go', 'navi-agent']
 draft: false
-title: "Navi Devlog #1 — Sprint 1 in motion: TUI, orchestrator loop, MCP path, and .env onboarding"
-description: "Navi moved from architecture-only to a runnable vertical slice: REPL/TUI flow, basic orchestrator tool loop, MCP integration path, SQLite persistence, and local dev onboarding with .env."
+title: "navi-agent Devlog #1 — Sprint 1 in motion: TUI, orchestrator loop, MCP path, and .env onboarding"
+description: "navi-agent moved from architecture-only to a runnable vertical slice: REPL/TUI flow, basic orchestrator tool loop, MCP integration path, SQLite persistence, and local dev onboarding with .env."
 ---
 
 The last post was about architecture decisions.
@@ -19,7 +19,7 @@ I spent this cycle turning ideas into something runnable and testable. Not polis
 
 ### 1) REST API vertical slice
 
-Navi now has a working API backbone with health, task, and agent routes, including sync flow.
+navi-agent now has a working API backbone with health, task, and agent routes, including sync flow.
 
 This gave me a full path from request → service → persistence → response, which is where real design flaws start to show up.
 
@@ -38,7 +38,7 @@ That sounds simple, but it changes everything: restart behavior, debugging, and 
 Agent sync is no longer fake.  
 Agents are loaded from filesystem definitions and synced into persistence.
 
-This aligns with the core principle of Navi: **agents are data, not hardcoded logic**.
+This aligns with the core principle of navi-agent: **agents are data, not hardcoded logic**.
 
 ---
 
@@ -80,14 +80,14 @@ Fresh clone experience now supports .env-based local setup for:
 - default model
 - environment mode (`development`/`production`)
 
-On startup in development mode, Navi prints which .env files were loaded.  
+On startup in development mode, navi-agent prints which .env files were loaded.  
 No guessing, no “why is this config not applying?” confusion.
 
 ---
 
 ### 8) First-launch config directory creation is explicit
 
-Navi now creates its user config directory on first launch before command execution.
+navi-agent now creates its user config directory on first launch before command execution.
 
 That removes a bunch of hidden friction for first-time contributors.
 
@@ -109,7 +109,7 @@ I had a long architecture discussion about telemetry, and I’m choosing the pra
 - Rotation
 - Make logs easy for MCP tools to inspect
 
-Why: Navi is local-first right now. I want observability without dependency bloat or complexity tax.
+Why: navi-agent is local-first right now. I want observability without dependency bloat or complexity tax.
 
 This keeps things minimal, testable, and future-proof.
 
@@ -132,7 +132,7 @@ So rewrites are not failure signals. They are part of design convergence.
 ## Sprint remodel (updated)
 
 ### Sprint 1 — Single-agent runtime stability (current)
-- Simple Navi TUI ✅
+- Simple navi-agent TUI ✅
 - Basic main orchestrator agent ✅
 - Basic tool calling ✅
 - Basic MCP integration ✅

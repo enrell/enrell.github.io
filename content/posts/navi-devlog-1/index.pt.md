@@ -2,11 +2,11 @@
 date: '2026-03-02'
 lastmod: '2026-03-02'
 author: 'enrell'
-tags: ['navi', 'go', 'ai', 'orchestrator', 'mcp', 'tui', 'dotenv']
-categories: ['Go', 'Navi']
+tags: ['navi-agent', 'go', 'ai', 'orchestrator', 'mcp', 'tui', 'dotenv']
+categories: ['Go', 'navi-agent']
 draft: false
-title: "Navi Devlog #1 — Sprint 1 em andamento: TUI, loop do orquestrador, caminho MCP e onboarding com .env"
-description: "Navi passou de apenas arquitetura para uma fatia vertical executável: fluxo REPL/TUI, loop básico de ferramentas do orquestrador, caminho de integração MCP, persistência com SQLite e onboarding local com .env."
+title: "navi-agent Devlog #1 — Sprint 1 em andamento: TUI, loop do orquestrador, caminho MCP e onboarding com .env"
+description: "navi-agent passou de apenas arquitetura para uma fatia vertical executável: fluxo REPL/TUI, loop básico de ferramentas do orquestrador, caminho de integração MCP, persistência com SQLite e onboarding local com .env."
 ---
 
 O último post foi sobre decisões de arquitetura.
@@ -19,7 +19,7 @@ Passei esse ciclo transformando ideias em algo executável e testável. Não pol
 
 ### 1) Fatia vertical da API REST
 
-Navi agora tem um backbone de API funcional com rotas de health, task e agent, incluindo fluxo síncrono.
+navi-agent agora tem um backbone de API funcional com rotas de health, task e agent, incluindo fluxo síncrono.
 
 Isso me deu um caminho completo de request → service → persistence → response, que é onde falhas reais de design começam a aparecer.
 
@@ -38,7 +38,7 @@ Parece simples, mas muda tudo: comportamento ao reiniciar, debugging e confianç
 A sincronização de agents não é mais falsa.  
 Os agents são carregados a partir de definições no sistema de arquivos e sincronizados na persistência.
 
-Isso se alinha ao princípio central do Navi: **agents são dados, não lógica hardcoded**.
+Isso se alinha ao princípio central do navi-agent: **agents são dados, não lógica hardcoded**.
 
 ---
 
@@ -80,14 +80,14 @@ A experiência de clone limpo agora suporta configuração local baseada em .env
 - modelo padrão
 - modo de ambiente (`development`/`production`)
 
-Na inicialização em modo desenvolvimento, Navi imprime quais arquivos .env foram carregados.  
+Na inicialização em modo desenvolvimento, navi-agent imprime quais arquivos .env foram carregados.  
 Sem adivinhações, sem "por que essa configuração não está aplicando?" confusões.
 
 ---
 
 ### 8) Criação do diretório de configuração no primeiro uso é explícita
 
-Navi agora cria seu diretório de configuração de usuário no primeiro uso antes da execução dos comandos.
+navi-agent agora cria seu diretório de configuração de usuário no primeiro uso antes da execução dos comandos.
 
 Isso remove bastante atrito oculto para novos contribuidores.
 
@@ -109,7 +109,7 @@ Tive uma longa discussão de arquitetura sobre telemetria e estou escolhendo o c
 - Rotação
 - Tornar os logs fáceis para ferramentas MCP inspecionarem
 
-Por quê: Navi é local-first agora. Quero observabilidade sem inchaço de dependências ou custo de complexidade.
+Por quê: navi-agent é local-first agora. Quero observabilidade sem inchaço de dependências ou custo de complexidade.
 
 Isso mantém as coisas minimais, testáveis e preparadas para o futuro.
 
@@ -132,7 +132,7 @@ Então reescritas não são sinais de falha. São parte da convergência de desi
 ## Replanejamento do Sprint (atualizado)
 
 ### Sprint 1 — Estabilidade do runtime de agente único (atual)
-- TUI simples do Navi ✅
+- TUI simples do navi-agent ✅
 - Agente orquestrador principal básico ✅
 - Chamada de ferramentas básica ✅
 - Integração MCP básica ✅

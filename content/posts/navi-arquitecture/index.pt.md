@@ -2,18 +2,18 @@
 date: '2026-02-23'
 lastmod: '2026-02-23'
 author: 'enrell'
-tags: ['navi', 'go', 'hexagonal-architecture', 'ai']
-categories: ['Go', 'Navi']
+tags: ['navi-agent', 'go', 'hexagonal-architecture', 'ai']
+categories: ['Go', 'navi-agent']
 draft: false
-title: "Definindo as decisões de arquitetura do Navi"
-description: 'Neste post, quero compartilhar algumas decisões arquiteturais sobre o meu projeto de orquestração de IA chamado Navi'
+title: "Definindo as decisões de arquitetura do navi-agent"
+description: 'Neste post, quero compartilhar algumas decisões arquiteturais sobre o meu projeto de orquestração de IA chamado navi-agent'
 ---
 
-Eram 3 da manhã quando tive a ideia do Navi, alguns meses atrás. Eu estava na cama pensando sobre o impacto dos LLMs nas *hard skills* dos desenvolvedores. Antes do boom dos LLMs, eu melhorava minhas habilidades de programação construindo projetos para o meu próprio uso. Mas quando a OpenAI lançou o GPT-3, vi que essa tecnologia poderia ser útil. Passei muito tempo brincando com a geração de código do GPT-3, e lembro da sensação que tive quando o usei para aprender POO (Programação Orientada a Objetos). Eu fiquei tipo: "Que p*rra é essa! Como esses caras fazem isso?". Essa foi a faísca que fez meu hiperfoco ativar para estudar a área.
+Eram 3 da manhã quando tive a ideia do navi-agent, alguns meses atrás. Eu estava na cama pensando sobre o impacto dos LLMs nas *hard skills* dos desenvolvedores. Antes do boom dos LLMs, eu melhorava minhas habilidades de programação construindo projetos para o meu próprio uso. Mas quando a OpenAI lançou o GPT-3, vi que essa tecnologia poderia ser útil. Passei muito tempo brincando com a geração de código do GPT-3, e lembro da sensação que tive quando o usei para aprender POO (Programação Orientada a Objetos). Eu fiquei tipo: "Que p*rra é essa! Como esses caras fazem isso?". Essa foi a faísca que fez meu hiperfoco ativar para estudar a área.
 
 Estudei o básico para entender as arquiteturas dos modelos e, recentemente, concluí a disciplina de Recuperação de Informação e Inteligência Artificial na faculdade. Agora tenho um conhecimento sólido para começar a entender o presente e o futuro dos LLMs.
 
-Neste artigo, vou apresentar as decisões arquiteturais por trás do Navi e alguns insights úteis sobre os pontos fortes e fracos dos agentes, com base no meu humilde conhecimento sobre LLMs.
+Neste artigo, vou apresentar as decisões arquiteturais por trás do navi-agent e alguns insights úteis sobre os pontos fortes e fracos dos agentes, com base no meu humilde conhecimento sobre LLMs.
 
 ## A diferença entre agentes e agência
 
@@ -58,13 +58,13 @@ type Agency struct {
 
 Cada agente tem uma **responsabilidade única**. O planejador não programa. O programador não executa. O executor não planeja. Eles se especializam, se comunicam e, juntos, resolvem problemas que sobrecarregariam qualquer agente individual.
 
-### Por que isso importa para o Navi
+### Por que isso importa para o navi-agent
 
-Quando comecei a projetar o Navi, cometi o erro do agente primeiro. Construí um agente monolítico que tentava lidar com orquestração, execução de ferramentas, gerenciamento de memória e formatação de respostas, tudo de uma vez.
+Quando comecei a projetar o navi-agent, cometi o erro do agente primeiro. Construí um agente monolítico que tentava lidar com orquestração, execução de ferramentas, gerenciamento de memória e formatação de respostas, tudo de uma vez.
 
 Foi uma bagunça.
 
-A virada de chave veio quando percebi: **O Navi não é um agente. O Navi é uma agência.** É um sistema onde agentes especializados trabalham juntos, cada um com limites e propósitos claros.
+A virada de chave veio quando percebi: **O navi-agent não é um agente. O navi-agent é uma agência.** É um sistema onde agentes especializados trabalham juntos, cada um com limites e propósitos claros.
 
 | Aspecto         | Agente               | Agência                  |
 |-----------------|----------------------|--------------------------|
@@ -76,11 +76,11 @@ A virada de chave veio quando percebi: **O Navi não é um agente. O Navi é uma
 
 No momento em que você entende essa diferença, toda a sua abordagem para orquestração de IA muda. Você para de perguntar "Como deixo meu agente mais inteligente?" e começa a perguntar "Como faço meus agentes trabalharem melhor juntos?".
 
-Essa é a base sobre a qual o Navi foi construído.
+Essa é a base sobre a qual o navi-agent foi construído.
 
 ## Os Pontos Fracos dos LLMs
 
-Eu amo essa tecnologia. Eu a estudei. Eu criei coisas com ela. Estou construindo o **Navi** em cima dela. Mas aqui está o que aprendi da pior maneira: se você não entende onde os LLMs quebram, você não está construindo infraestrutura — está construindo um castelo de cartas.
+Eu amo essa tecnologia. Eu a estudei. Eu criei coisas com ela. Estou construindo o **navi-agent** em cima dela. Mas aqui está o que aprendi da pior maneira: se você não entende onde os LLMs quebram, você não está construindo infraestrutura — está construindo um castelo de cartas.
 
 Deixa eu compartilhar o que descobri depois de inúmeras sessões de debug às 4 da manhã.
 
@@ -88,7 +88,7 @@ Deixa eu compartilhar o que descobri depois de inúmeras sessões de debug às 4
 
 Todo mundo comemora janelas de contexto maiores como se tivéssemos resolvido tudo. Legal, mas aqui está o que realmente acontece: seu modelo começa a esquecer coisas antes mesmo de atingir o limite.
 
-Eu estava construindo uma funcionalidade onde o Navi precisava lembrar do histórico da conversa, mais os resultados das ferramentas, mais as instruções do sistema. Parece simples, certo? Bem, por volta do token 8.000 em um modelo de 32K, as coisas ficaram esquisitas. O modelo começou a:
+Eu estava construindo uma funcionalidade onde o navi-agent precisava lembrar do histórico da conversa, mais os resultados das ferramentas, mais as instruções do sistema. Parece simples, certo? Bem, por volta do token 8.000 em um modelo de 32K, as coisas ficaram esquisitas. O modelo começou a:
 
 - Ignorar instruções que coloquei no início
 - Começar a dar respostas genéricas
@@ -164,7 +164,7 @@ A maioria das pessoas acha que sistemas multi-agentes são sobre velocidade. Par
 
 **É sobre distribuição cognitiva.**
 
-Quando dividi o Navi em agentes especializados, algo interessante aconteceu:
+Quando dividi o navi-agent em agentes especializados, algo interessante aconteceu:
 
 | Agente Único               | Agência                          |
 |----------------------------|----------------------------------|
@@ -260,7 +260,7 @@ type Orchestrator struct {
 4. **Supervisão humana é inegociável** — Por mais autônomo que seja o seu sistema, mantenha humanos no circuito (*human-in-the-loop*) para decisões críticas.
 5. **O ciclo do hype é real** — Ignore o barulho de "A IA vai substituir os desenvolvedores". Construa coisas úteis. Resolva problemas reais.
 
-## O Que Vem a Seguir para o Navi
+## O Que Vem a Seguir para o navi-agent
 
 Ainda estou no início dessa jornada. A arquitetura está se estabilizando, mas ainda há muito código para escrever e decisões para tomar, como:
 
@@ -277,6 +277,6 @@ Mas a fundação é sólida. E é sólida porque a projetei em torno dos pontos 
 
 Se você está construindo com LLMs, eu adoraria ouvir suas histórias de trincheira. Quais erros de arquitetura você cometeu? O que funcionou? O que falhou miseravelmente?
 
-Me dê um toque nos comentários, no [X](https://x.com/enrellsan) ou no [Discord](https://discord.gg/eNsMFGZU). E se você estiver curioso sobre o progresso do Navi, o [repositório no GitHub](https://github.com/enrell/navi) é onde toda a experimentação bagunçada acontece em público (ainda não há código lá, mas em breve terá).
+Me dê um toque nos comentários, no [X](https://x.com/enrellsan) ou no [Discord](https://discord.gg/eNsMFGZU). E se você estiver curioso sobre o progresso do navi-agent, o [repositório no GitHub](https://github.com/enrell/navi) é onde toda a experimentação bagunçada acontece em público (ainda não há código lá, mas em breve terá).
 
 Lembre-se: a infraestrutura sobrevive a bolhas. O hype não.
