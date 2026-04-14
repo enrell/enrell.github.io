@@ -1,7 +1,7 @@
 ---
 title: "Port: Uma TUI Simples para Gerenciar Portas de Rede Abertas no Linux"
 date: 2026-04-14
-lastmod: 2026-04-14
+lastmod: 2026-04-14T04:55
 draft: false
 author: "enrell"
 description: "Já teve seu terminal travar e o servidor continuar rodando em segundo plano? Eu construí uma TUI em Rust pra resolver esse problema de vez."
@@ -67,16 +67,28 @@ Nada mais de memorizar flags do lsof. Nada mais de acrobacias com pipes. Só rod
 - **Busca** — Filtro ao vivo por nome do processo ou número da porta (`/` ou `i` para buscar)
 - **Kill rápido** — Seleciona, aperta Enter, confirma com `y` — processo terminado (SIGKILL)
 - **Só teclado** — Navegação estilo Vim, mouse não necessário
+- **Mostrar todas as portas** — Flag `--all` ignora o filtro quando você precisa ver serviços do sistema também
 
 ## Instalação
 
+O jeito mais fácil de instalar é com uma linha:
+
 ```bash
-cd port
-cargo build --release
-sudo cp target/release/port /usr/local/bin/
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/enrell/port/releases/latest/download/port-install.sh | sh
 ```
 
-Pronto. Binário único, sem dependências.
+Isso detecta sua arquitetura automaticamente (x86_64 ou aarch64) e instala em `~/.local/bin/port`.
+
+Ou compile do source:
+
+```bash
+git clone https://github.com/enrell/port
+cd port
+cargo build --release
+install -Dm755 target/release/port ~/.local/bin/port
+```
+
+Binário único, sem dependências.
 
 ## Como Funciona
 
@@ -110,6 +122,8 @@ PORT │ PROCESS  │ PATH
 ```
 
 Posso navegar com `j`/`k`, buscar com `/`, e matar qualquer um desses com Enter + `y`. Sem mudança de contexto. Sem acrobacias de `ps aux | grep`.
+
+Precisa ver portas de sistema também? `port --all` mostra tudo.
 
 ## Por que SIGKILL?
 
@@ -145,21 +159,21 @@ src/
 
 - Filtros configuráveis (config TOML ao invés de listas hardcoded)
 - Suporte a UDP (`/proc/net/udp`)
-- Argumentos CLI para queries rápidas one-off
 - Ordenação por uso de memória/CPU
+- Port forwarding / rebinding
 
 ## Experimente
 
 Port é licenciado sob MIT e disponível no GitHub. Se você já lutou com `lsof` ou `fuser` para liberar uma porta, esta ferramenta é pra você.
 
 ```bash
-# Clone e compile
+# Instalação com uma linha
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/enrell/port/releases/latest/download/port-install.sh | sh
+
+# Ou clone e compile
 git clone https://github.com/enrell/port
 cd port && cargo build --release
-sudo cp target/release/port /usr/local/bin/
-
-# Executar
-port
+install -Dm755 target/release/port ~/.local/bin/port
 ```
 
 Issues, reports de bugs e feature requests são bem-vindos. Adoraria saber se isso economiza tanto tempo para você quanto economizou para mim.
@@ -169,3 +183,5 @@ Issues, reports de bugs e feature requests são bem-vindos. Adoraria saber se is
 *Que pequenos pontos de fricção no seu workflow você automatizou? Deixa um comentário — eu estou sempre procurando o próximo "paper cut" pra resolver.*
 
 *Se achou útil, compartilha com outros desenvolvedores. Ajuda mais do que você imagina.*
+
+See you in the Wired.

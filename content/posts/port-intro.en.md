@@ -1,10 +1,10 @@
 ---
 title: "Port: A Simple TUI for Managing Open Network Ports on Linux"
 date: 2026-04-14
-lastmod: 2026-04-14
+lastmod: 2026-04-14T04:55
 draft: false
 author: "enrell"
-description: "Ever had a terminal crash and your server kept running in the background? I built a Rust TUI to solve this problem once and for all."
+description: "Ever had your terminal crash and your server kept running in the background? I built a Rust TUI to solve this problem once and for all."
 
 tags: ["rust", "tui", "linux", "cli", "networking", "open-source"]
 categories: ["Programming", "Tools"]
@@ -67,16 +67,28 @@ No more memorizing lsof flags. No more pipe gymnastics. Just run `port` and see 
 - **Search** — Live filter by process name or port number (`/` or `i` to search)
 - **Quick kill** — Select, hit Enter, confirm with `y` — process terminated (SIGKILL)
 - **Keyboard-driven** — Vim-style navigation, no mouse needed
+- **Show all ports** — `--all` flag bypasses the filter when you need to see system services too
 
 ## Installation
 
+The easiest way to install is with the one-liner:
+
 ```bash
-cd port
-cargo build --release
-sudo cp target/release/port /usr/local/bin/
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/enrell/port/releases/latest/download/port-install.sh | sh
 ```
 
-That's it. Single binary, no dependencies.
+This automatically detects your architecture (x86_64 or aarch64) and installs to `~/.local/bin/port`.
+
+Or build from source:
+
+```bash
+git clone https://github.com/enrell/port
+cd port
+cargo build --release
+install -Dm755 target/release/port ~/.local/bin/port
+```
+
+Single binary, no dependencies.
 
 ## How It Works
 
@@ -110,6 +122,8 @@ PORT │ PROCESS  │ PATH
 ```
 
 I can navigate with `j`/`k`, search with `/`, and kill any of these with Enter + `y`. No context switching. No `ps aux | grep` acrobatics.
+
+Need to see system ports too? `port --all` shows everything.
 
 ## Why SIGKILL?
 
@@ -145,21 +159,21 @@ src/
 
 - Configurable filters (TOML config instead of hardcoded lists)
 - UDP support (`/proc/net/udp`)
-- CLI args for quick one-off queries
 - Sort by memory/CPU usage
+- Port forwarding / rebinding
 
 ## Try It Out
 
 Port is MIT-licensed and available on GitHub. If you've ever fought with `lsof` or `fuser` to free up a port, this tool is for you.
 
 ```bash
-# Clone and build
+# One-liner install
+curl --proto '=https' --tlsv1.2 -LsSf https://github.com/enrell/port/releases/latest/download/port-install.sh | sh
+
+# Or clone and build
 git clone https://github.com/enrell/port
 cd port && cargo build --release
-sudo cp target/release/port /usr/local/bin/
-
-# Run
-port
+install -Dm755 target/release/port ~/.local/bin/port
 ```
 
 Issues, bug reports, and feature requests welcome. I'd love to hear if it saves you as much time as it's saved me.
@@ -169,3 +183,5 @@ Issues, bug reports, and feature requests welcome. I'd love to hear if it saves 
 *What small friction points in your workflow have you automated? Drop a comment — I'm always looking for the next paper cut to solve.*
 
 *Also, if you found this useful, share it with fellow developers. It helps more than you know.*
+
+See you in the Wired.
