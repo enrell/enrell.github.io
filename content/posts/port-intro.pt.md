@@ -74,7 +74,7 @@ Nada mais de memorizar flags do lsof. Nada mais de acrobacias com pipes. Só rod
 O jeito mais fácil de instalar é com uma linha:
 
 ```bash
-curl --proto '=https' --tlsv1.2 -LsSf https://github.com/enrell/port/releases/latest/download/port-install.sh | sh
+curl -LsSf https://raw.githubusercontent.com/enrell/port/main/scripts/install.sh | sh
 ```
 
 Isso detecta sua arquitetura automaticamente (x86_64 ou aarch64) e instala em `~/.local/bin/port`.

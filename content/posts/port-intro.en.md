@@ -74,7 +74,7 @@ No more memorizing lsof flags. No more pipe gymnastics. Just run `port` and see 
 The easiest way to install is with the one-liner:
 
 ```bash
-curl --proto '=https' --tlsv1.2 -LsSf https://github.com/enrell/port/releases/latest/download/port-install.sh | sh
+curl -LsSf https://raw.githubusercontent.com/enrell/port/main/scripts/install.sh | sh
 ```
 
 This automatically detects your architecture (x86_64 or aarch64) and installs to `~/.local/bin/port`.
