@@ -1,12 +1,11 @@
 ---
-title: "Port: A Simple TUI for Managing Open Network Ports on Linux"
+title: "Port: A TUI + CLI for Managing Open Network Ports on Linux"
 date: 2026-04-14
-lastmod: 2026-04-14T04:55
+lastmod: 2026-04-21T00:02
 draft: false
 author: "enrell"
-description: "Ever had your terminal crash and your server kept running in the background? I built a Rust TUI to solve this problem once and for all."
-
-tags: ["rust", "tui", "linux", "cli", "networking", "open-source"]
+description: "A Rust tool that finds which process is using a port and lets you kill it — via TUI or directly from the command line."
+tags: ["rust", "tui", "cli", "linux", "networking", "open-source"]
 categories: ["Programming", "Tools"]
 
 toc:
@@ -23,20 +22,19 @@ comment:
  enable: true
 ---
 
-You know that moment when you're running a development server, the terminal crashes, and suddenly `localhost:3000` is still occupied but you have no idea which process is holding it? I've been there way too many times.
+You run a server, the terminal crashes, and suddenly `localhost:3000` is still occupied. You have no idea which process owns it. Sound familiar?
+
+**Port** solves this. Two ways to use it:
 
 ```
-$ port
-3306 │ mysqld     │ /usr/sbin/mysqld
-3000 │ node       │ /home/user/project/node_modules/.bin/next
-8080 │ python3    │ /home/user/another_project/app.py
+$ port                    # TUI mode — interactive table
+$ port 3000              # CLI mode — kill port 3000 directly
+$ port --list            # List ports as text (scriptable)
 ```
-
-Three keystrokes later, problem solved.
 
 ## The Problem
 
-It happens to all of us. You start a Node.js server, a Python Flask app, or a Rust backend. Then:
+It happens all the time. You start a Node.js server, a Python Flask app, or a Rust backend. Then:
 
 - Your terminal freezes
 - You accidentally close the wrong window
@@ -44,7 +42,7 @@ It happens to all of us. You start a Node.js server, a Python Flask app, or a Ru
 
 The server? Still running. Invisible. Occupying the port.
 
-Finding and killing it means running commands like:
+Finding and killing it the old way:
 
 ```bash
 sudo lsof -i :3000
@@ -52,21 +50,34 @@ sudo lsof -i :3000
 kill -9 <PID>
 ```
 
-Simple, but annoying. Repetitive. The kind of friction that breaks flow state.
+Simple, but annoying. Repetitive. Is not cool enough XD.
 
-## Meet Port
+## Why This Exists
 
-**Port** is a Rust TUI (Terminal User Interface) that shows you all open TCP ports owned by user processes, filters out system services, and lets you terminate processes with a few keystrokes.
+You could just add an alias to your shell:
 
-No more memorizing lsof flags. No more pipe gymnastics. Just run `port` and see everything.
+```bash
+alias kp='kill $(lsof -t -i:$1)'
+```
+
+And be done with it. This project exists because:
+
+- **Learning Rust** — a real, usable tool from scratch
+- **Understanding /proc** — how Linux actually tracks sockets and processes
+- **TUI exploration** — building interactive interfaces with Ratatui
+- **Fun side project** — sometimes you build something just to build it
+
+Think of it as a practical study project, not a replacement for `lsof` or `ss`. If you want something production-ready, use the real tools. If you want to understand how those tools work under the hood, this is one way in.
 
 ## Features
 
-- **Live port list** — Shows TCP ports with process names and executable paths
+- **TUI mode** — Interactive table with Vim-style navigation
+- **CLI mode** — `port <port>` to kill directly, no interaction needed
+- **List mode** — `port --list` for scriptable output
+- **Docker support** — Detects container ports, kills via `docker stop`
 - **Smart filtering** — Excludes SSH, HTTP, Docker, systemd, and other system services automatically
-- **Search** — Live filter by process name or port number (`/` or `i` to search)
+- **Search** — Live filter by process name or port number
 - **Quick kill** — Select, hit Enter, confirm with `y` — process terminated (SIGKILL)
-- **Keyboard-driven** — Vim-style navigation, no mouse needed
 - **Show all ports** — `--all` flag bypasses the filter when you need to see system services too
 
 ## Installation
@@ -90,46 +101,85 @@ install -Dm755 target/release/port ~/.local/bin/port
 
 Single binary, no dependencies.
 
+## Usage
+
+### TUI Mode
+
+```bash
+port
+```
+
+![Port TUI](/images/screenshot-2026-04-22_18-42-44.png)
+
+Navigate with `j`/`k`, search with `/`, kill with Enter + `y`.
+
+![Port TUI with kill confirmation](/images/screenshot-2026-04-22_18-59-56.png)
+
+### CLI Mode (direct kill)
+
+```bash
+port 3000
+```
+
+Kills the process on port 3000 directly. Works for both regular processes and Docker containers.
+
+### List Mode
+
+```bash
+port --list
+```
+
+```
+3000 100 node
+5173 101 node
+8080 102 python3
+```
+
+Useful for scripting or piping to other tools.
+
 ## How It Works
 
-Port reads directly from `/proc/net/tcp` and `/proc/[pid]/fd/` — no external tools needed. Here's the flow:
+Port reads from multiple sources to get a complete picture:
 
-1. Build an inode-to-PID map by scanning `/proc/[pid]/fd/*` symlinks
-2. Parse `/proc/net/tcp` (and `tcp6`) to find listening sockets
-3. Match socket inodes to processes
-4. Filter out system services via a hardcoded blacklist
-5. Render a Ratatui table with navigation, search, and kill confirmation
+1. **`/proc/net/tcp` and `/proc/net/tcp6`** — parsing listening sockets directly
+2. **`ss -tlnpe`** — supplementary discovery for edge cases
+3. **`docker ps`** — detects exposed container ports
 
-The whole discovery happens in under 100ms on typical systems.
+For each port, it builds an inode-to-PID map by scanning `/proc/[pid]/fd/*` symlinks, then matches socket inodes to processes. Docker containers are identified by their container ID and stopped via `docker stop -t 0` (SIGTERM, immediate).
 
 ## The Stack
 
 | Layer | Technology | Why |
 |-------|------------|-----|
-| Port Discovery | Manual /proc parsing | Zero dependencies, maximum control |
+| Port Discovery | /proc parsing + ss + docker ps | Zero external deps for core, docker CLI for containers |
 | TUI | Ratatui | Fast, composable terminal UI |
-| Process Control | libc::kill | Direct system call, no shelling out |
+| CLI Args | Clap | Structured argument parsing |
+| Process Control | libc::kill + docker CLI | Direct syscall for processes, docker CLI for containers |
 | Language | Rust | Safety + performance |
 
-## A Real Example
+## Architecture
 
 ```
-PORT │ PROCESS  │ PATH
-─────┼──────────┼────────────────────────────────
-3000 │ node     │ /home/enrell/blog/.next/server
-5173 │ node     │ /home/enrell/app/node_modules/.bin/vite
-8080 │ python3  │ /home/enrell/api/main.py
+src/
+├── main.rs      # Entry point, CLI arg parsing, terminal setup
+├── app.rs       # State machine (Normal/Search/ConfirmKill modes)
+├── events.rs    # Key event handling
+├── ui.rs        # Ratatui rendering
+├── ports.rs     # Port discovery from /proc, ss, docker ps
+├── process.rs   # Process kill (SIGKILL) + docker stop
+├── filter.rs    # System port/process filtering
+└── lib.rs       # Module exports
 ```
 
-I can navigate with `j`/`k`, search with `/`, and kill any of these with Enter + `y`. No context switching. No `ps aux | grep` acrobatics.
+## Why Docker Stop Instead of SIGKILL?
 
-Need to see system ports too? `port --all` shows everything.
+For Docker containers, we use `docker stop -t 0` instead of SIGKILL. This sends SIGTERM to the main process inside the container, which:
 
-## Why SIGKILL?
+- Respects the container's shutdown logic
+- Allows graceful cleanup
+- Avoids leaving orphaned processes
 
-Some might ask: why SIGKILL (force kill) instead of SIGTERM (graceful shutdown)?
-
-Because this tool is for **stuck** processes. Zombie servers. Crashed terminals. Things that probably won't respond to SIGTERM anyway. The confirmation modal (`y`/`n`) provides enough safety — if you hit Enter and `y` by accident, that's on you.
+Regular processes still get SIGKILL — they're typically orphaned servers that won't respond to SIGTERM anyway.
 
 ## Development & Testing
 
@@ -141,47 +191,32 @@ cargo test
 cargo run
 ```
 
-The codebase is structured for testability — each module has colocated `#[cfg(test)]` blocks:
-
-```
-src/
-├── main.rs     # Entry point, terminal setup
-├── app.rs      # State machine (Normal/Search/ConfirmKill modes)
-├── events.rs   # Key event handling
-├── ui.rs       # Ratatui rendering
-├── ports.rs    # Port discovery from /proc
-├── process.rs  # Process operations (kill)
-├── filter.rs   # System port/process filtering
-└── lib.rs      # Module exports
-```
-
 ## Future Ideas
 
 - Configurable filters (TOML config instead of hardcoded lists)
 - UDP support (`/proc/net/udp`)
 - Sort by memory/CPU usage
 - Port forwarding / rebinding
+- JSON output mode
 
 ## Try It Out
 
-Port is MIT-licensed and available on GitHub. If you've ever fought with `lsof` or `fuser` to free up a port, this tool is for you.
+Port is MIT-licensed and available on GitHub.
 
 ```bash
-# One-liner install
-curl --proto '=https' --tlsv1.2 -LsSf https://github.com/enrell/port/releases/latest/download/port-install.sh | sh
+curl -LsSf https://raw.githubusercontent.com/enrell/port/main/scripts/install.sh | sh
+```
 
-# Or clone and build
+Or clone and build:
+
+```bash
 git clone https://github.com/enrell/port
 cd port && cargo build --release
 install -Dm755 target/release/port ~/.local/bin/port
 ```
 
-Issues, bug reports, and feature requests welcome. I'd love to hear if it saves you as much time as it's saved me.
+Issues and feature requests welcome.
 
 ---
-
-*What small friction points in your workflow have you automated? Drop a comment — I'm always looking for the next paper cut to solve.*
-
-*Also, if you found this useful, share it with fellow developers. It helps more than you know.*
 
 See you in the Wired.

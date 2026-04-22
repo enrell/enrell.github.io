@@ -1,12 +1,11 @@
 ---
-title: "Port: Uma TUI Simples para Gerenciar Portas de Rede Abertas no Linux"
+title: "Port: Uma TUI + CLI para Gerenciar Portas de Rede Abertas no Linux"
 date: 2026-04-14
-lastmod: 2026-04-14T04:55
+lastmod: 2026-04-21T00:02
 draft: false
 author: "enrell"
-description: "Já teve seu terminal travar e o servidor continuar rodando em segundo plano? Eu construí uma TUI em Rust pra resolver esse problema de vez."
-
-tags: ["rust", "tui", "linux", "cli", "networking", "open-source"]
+description: "Um tool em Rust que encontra qual processo está usando uma porta e permite matar ele — via TUI ou diretamente pela linha de comando."
+tags: ["rust", "tui", "cli", "linux", "networking", "open-source"]
 categories: ["Programming", "Tools"]
 
 toc:
@@ -23,20 +22,19 @@ comment:
  enable: true
 ---
 
-Você conhece aquele momento quando está rodando um servidor de desenvolvimento, o terminal trava, e de repente o `localhost:3000` ainda está ocupado mas você não faz ideia de qual processo está segurando ele? Eu passei por isso muitas vezes.
+Você roda um servidor, o terminal trava, e de repente o `localhost:3000` ainda está ocupado. Você não faz ideia de qual processo é o dono. Te soa familiar?
+
+**Port** resolve isso. Duas formas de usar:
 
 ```
-$ port
-3306 │ mysqld     │ /usr/sbin/mysqld
-3000 │ node       │ /home/user/project/node_modules/.bin/next
-8080 │ python3    │ /home/user/another_project/app.py
+$ port                    # Modo TUI — tabela interativa
+$ port 3000              # Modo CLI — mata a porta 3000 diretamente
+$ port --list            # Lista portas como texto (scriptável)
 ```
-
-Três keystrokes depois, problema resolvido.
 
 ## O Problema
 
-Acontece com todo mundo. Você inicia um servidor Node.js, um app Python Flask, ou um backend em Rust. Aí:
+Acontece o tempo todo. Você inicia um servidor Node.js, um app Python Flask, ou um backend em Rust. Aí:
 
 - Seu terminal congela
 - Você fecha a janela errada por acidente
@@ -44,7 +42,7 @@ Acontece com todo mundo. Você inicia um servidor Node.js, um app Python Flask, 
 
 O servidor? Continua rodando. Invisível. Ocupando a porta.
 
-Encontrar e matar o processo significa rodar comandos como:
+Encontrar e matar do jeito antigo:
 
 ```bash
 sudo lsof -i :3000
@@ -52,21 +50,34 @@ sudo lsof -i :3000
 kill -9 <PID>
 ```
 
-Simples, mas chato. Repetitivo. O tipo de fricção que quebra o estado de flow.
+Simples, mas chato. Repetitivo. Não é legal o suficiente XD.
 
-## Conheça o Port
+## Por Que Isso Existe
 
-**Port** é uma TUI (Interface de Terminal) em Rust que mostra todas as portas TCP abertas pertencentes a processos do usuário, filtra serviços do sistema, e permite terminar processos com poucos keystrokes.
+Você poderia simplesmente adicionar um alias no seu shell:
 
-Nada mais de memorizar flags do lsof. Nada mais de acrobacias com pipes. Só rodar `port` e ver tudo.
+```bash
+alias kp='kill $(lsof -t -i:$1)'
+```
+
+E pronto. Este projeto existe porque:
+
+- **Aprender Rust** — uma ferramenta real e utilizável do zero
+- **Entender o /proc** — como o Linux realmente rastreia sockets e processos
+- **Exploração de TUI** — construir interfaces interativas com Ratatui
+- **Projeto paralelo por diversão** — às vezes você constrói algo só pra construir
+
+Pense nisso como um projeto de estudo prático, não como substituto para `lsof` ou `ss`. Se você quer algo pronto para produção, use as ferramentas reais. Se quer entender como essas ferramentas funcionam por baixo do capô, essa é uma forma de fazer isso.
 
 ## Funcionalidades
 
-- **Lista ao vivo de portas** — Mostra portas TCP com nomes de processos e caminhos dos executáveis
+- **Modo TUI** — Tabela interativa com navegação estilo Vim
+- **Modo CLI** — `port <porta>` para matar diretamente, sem interação
+- **Modo Lista** — `port --list` para output scriptável
+- **Suporte a Docker** — Detecta portas de containers, mata via `docker stop`
 - **Filtragem inteligente** — Exclui SSH, HTTP, Docker, systemd e outros serviços do sistema automaticamente
-- **Busca** — Filtro ao vivo por nome do processo ou número da porta (`/` ou `i` para buscar)
+- **Busca** — Filtro ao vivo por nome do processo ou número da porta
 - **Kill rápido** — Seleciona, aperta Enter, confirma com `y` — processo terminado (SIGKILL)
-- **Só teclado** — Navegação estilo Vim, mouse não necessário
 - **Mostrar todas as portas** — Flag `--all` ignora o filtro quando você precisa ver serviços do sistema também
 
 ## Instalação
@@ -90,46 +101,85 @@ install -Dm755 target/release/port ~/.local/bin/port
 
 Binário único, sem dependências.
 
+## Uso
+
+### Modo TUI
+
+```bash
+port
+```
+
+![Port TUI](/images/screenshot-2026-04-22_18-42-44.png)
+
+Navegue com `j`/`k`, busque com `/`, mate com Enter + `y`.
+
+![Port TUI com confirmação de kill](/images/screenshot-2026-04-22_18-59-56.png)
+
+### Modo CLI (kill direto)
+
+```bash
+port 3000
+```
+
+Mata o processo na porta 3000 diretamente. Funciona tanto para processos normais quanto para containers Docker.
+
+### Modo Lista
+
+```bash
+port --list
+```
+
+```
+3000 100 node
+5173 101 node
+8080 102 python3
+```
+
+Útil para scripting ou pipe para outras ferramentas.
+
 ## Como Funciona
 
-O Port lê diretamente de `/proc/net/tcp` e `/proc/[pid]/fd/` — nenhuma ferramenta externa necessária. Aqui está o fluxo:
+O Port lê de múltiplas fontes para ter uma visão completa:
 
-1. Constrói um mapa inode→PID escaneando symlinks de `/proc/[pid]/fd/*`
-2. Analisa `/proc/net/tcp` (e `tcp6`) para encontrar sockets em escuta
-3. Associa inodes de sockets aos processos
-4. Filtra serviços do sistema via uma blacklist hardcoded
-5. Renderiza uma tabela Ratatui com navegação, busca e confirmação de kill
+1. **`/proc/net/tcp` e `/proc/net/tcp6`** — parse de sockets em escuta diretamente
+2. **`ss -tlnpe`** — descoberta suplementar para casos edge
+3. **`docker ps`** — detecta portas expostas de containers
 
-Toda a descoberta acontece em menos de 100ms em sistemas típicos.
+Para cada porta, ele constrói um mapa inode→PID escaneando symlinks de `/proc/[pid]/fd/*`, então associa inodes de sockets aos processos. Containers Docker são identificados pelo container ID e parados via `docker stop -t 0` (SIGTERM, imediato).
 
 ## A Stack
 
 | Camada | Tecnologia | Por quê |
 |--------|------------|---------|
-| Descoberta de Portas | Parsing manual do /proc | Zero dependências, controle máximo |
+| Descoberta de Portas | /proc parsing + ss + docker ps | Zero deps externos para o core, docker CLI para containers |
 | TUI | Ratatui | UI de terminal rápida e composicional |
-| Controle de Processos | libc::kill | Chamada de sistema direta, sem shell |
+| CLI Args | Clap | Parsing estruturado de argumentos |
+| Controle de Processos | libc::kill + docker CLI | Syscall direta para processos, docker CLI para containers |
 | Linguagem | Rust | Segurança + performance |
 
-## Um Exemplo Real
+## Arquitetura
 
 ```
-PORT │ PROCESS  │ PATH
-─────┼──────────┼────────────────────────────────
-3000 │ node     │ /home/enrell/blog/.next/server
-5173 │ node     │ /home/enrell/app/node_modules/.bin/vite
-8080 │ python3  │ /home/enrell/api/main.py
+src/
+├── main.rs      # Ponto de entrada, parsing de args, setup do terminal
+├── app.rs       # Máquina de estados (modos Normal/Search/ConfirmKill)
+├── events.rs    # Handling de eventos de teclado
+├── ui.rs        # Renderização Ratatui
+├── ports.rs     # Descoberta de portas do /proc, ss, docker ps
+├── process.rs   # Kill de processo (SIGKILL) + docker stop
+├── filter.rs    # Filtragem de portas/processos do sistema
+└── lib.rs       # Exports dos módulos
 ```
 
-Posso navegar com `j`/`k`, buscar com `/`, e matar qualquer um desses com Enter + `y`. Sem mudança de contexto. Sem acrobacias de `ps aux | grep`.
+## Por que Docker Stop ao invés de SIGKILL?
 
-Precisa ver portas de sistema também? `port --all` mostra tudo.
+Para containers Docker, usamos `docker stop -t 0` ao invés de SIGKILL. Isso envia SIGTERM para o processo principal dentro do container, que:
 
-## Por que SIGKILL?
+- Respeita a lógica de shutdown do container
+- Permite cleanup gracioso
+- Evita deixar processos orfãos
 
-Alguns podem perguntar: por que SIGKILL (forçar kill) ao invés de SIGTERM (shutdown gracioso)?
-
-Porque esta ferramenta é para processos **travados**. Servidores zumbis. Terminais travados. Coisas que provavelmente não vão responder a SIGTERM de qualquer forma. O modal de confirmação (`y`/`n`) fornece segurança suficiente — se você apertar Enter e `y` por acidente, aí é problema seu.
+Processos normais ainda recebem SIGKILL — eles são tipicamente servidores orfãos que não vão responder a SIGTERM de qualquer forma.
 
 ## Desenvolvimento & Testes
 
@@ -141,47 +191,32 @@ cargo test
 cargo run
 ```
 
-A base de código é estruturada para testabilidade — cada módulo tem blocos `#[cfg(test)]` colocados:
-
-```
-src/
-├── main.rs     # Ponto de entrada, setup do terminal
-├── app.rs      # Máquina de estados (modos Normal/Search/ConfirmKill)
-├── events.rs   # Handling de eventos de teclado
-├── ui.rs       # Renderização Ratatui
-├── ports.rs    # Descoberta de portas do /proc
-├── process.rs  # Operações de processos (kill)
-├── filter.rs   # Filtragem de portas/processos do sistema
-└── lib.rs      # Exports dos módulos
-```
-
 ## Ideias Futuras
 
 - Filtros configuráveis (config TOML ao invés de listas hardcoded)
 - Suporte a UDP (`/proc/net/udp`)
 - Ordenação por uso de memória/CPU
 - Port forwarding / rebinding
+- Modo de output JSON
 
 ## Experimente
 
-Port é licenciado sob MIT e disponível no GitHub. Se você já lutou com `lsof` ou `fuser` para liberar uma porta, esta ferramenta é pra você.
+Port é licenciado sob MIT e disponível no GitHub.
 
 ```bash
-# Instalação com uma linha
-curl --proto '=https' --tlsv1.2 -LsSf https://github.com/enrell/port/releases/latest/download/port-install.sh | sh
+curl -LsSf https://raw.githubusercontent.com/enrell/port/main/scripts/install.sh | sh
+```
 
-# Ou clone e compile
+Ou clone e compile:
+
+```bash
 git clone https://github.com/enrell/port
 cd port && cargo build --release
 install -Dm755 target/release/port ~/.local/bin/port
 ```
 
-Issues, reports de bugs e feature requests são bem-vindos. Adoraria saber se isso economiza tanto tempo para você quanto economizou para mim.
+Issues e feature requests são bem-vindos.
 
 ---
-
-*Que pequenos pontos de fricção no seu workflow você automatizou? Deixa um comentário — eu estou sempre procurando o próximo "paper cut" pra resolver.*
-
-*Se achou útil, compartilha com outros desenvolvedores. Ajuda mais do que você imagina.*
 
 See you in the Wired.
