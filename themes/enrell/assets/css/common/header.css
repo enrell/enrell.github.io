@@ -1,6 +1,6 @@
 .nav {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: space-between;
     max-width: calc(var(--nav-width) + var(--gap) * 2);
     margin-inline-start: auto;

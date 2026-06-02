@@ -159,8 +159,8 @@
     scroll-margin-top: calc(var(--header-height) + 1rem);
 }
 
-/* Hamburger menu TOC (mobile only) */
-.menu-toc-section {
+/* Hamburger menu TOC (mobile only) — must override #menu li { display: flex } */
+#menu > li.menu-toc-section {
     display: none;
 }
 

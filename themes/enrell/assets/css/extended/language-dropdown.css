@@ -10,6 +10,7 @@
 
 .nav {
     display: flex;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
@@ -110,6 +111,7 @@
 
 #menu {
     display: flex;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
     flex: 1 1 auto;
@@ -118,8 +120,13 @@
     padding: 0;
     gap: clamp(18px, 2.8vw, 40px);
     min-width: 0;
+    overflow: hidden;
     word-break: keep-all;
     white-space: nowrap;
+}
+
+#menu > li.menu-toc-section {
+    display: none;
 }
 
 #menu li {
