@@ -1,6 +1,38 @@
 (() => {
+  const tocColumn = document.querySelector(".post-toc-column");
   const tocInner = document.querySelector(".post-toc-inner");
   const content = document.querySelector(".post-content");
+  const postHeader = document.querySelector(".post-page--with-toc .post-header");
+
+  const TOC_LAYOUT_BREAKPOINT = 1100;
+
+  const headerOffset =
+    Number.parseInt(
+      getComputedStyle(document.documentElement).getPropertyValue("--header-height"),
+      10
+    ) || 60;
+
+  const alignTocColumn = () => {
+    if (!tocColumn) return;
+
+    if (window.innerWidth <= TOC_LAYOUT_BREAKPOINT) {
+      tocColumn.style.top = "";
+      tocColumn.classList.remove("is-positioned");
+      return;
+    }
+
+    const minTop = headerOffset + 12;
+    const top = postHeader
+      ? Math.max(minTop, postHeader.getBoundingClientRect().top)
+      : minTop;
+
+    tocColumn.style.top = `${top}px`;
+    tocColumn.classList.add("is-positioned");
+  };
+
+  alignTocColumn();
+  window.addEventListener("resize", alignTocColumn, { passive: true });
+
   if (!tocInner || !content) return;
 
   const sections = Array.from(tocInner.querySelectorAll('a[href^="#"]'))
@@ -12,12 +44,6 @@
     .filter(Boolean);
 
   if (!sections.length) return;
-
-  const headerOffset =
-    Number.parseInt(
-      getComputedStyle(document.documentElement).getPropertyValue("--header-height"),
-      10
-    ) || 60;
 
   const setActive = (activeLink) => {
     sections.forEach(({ link }) => {
