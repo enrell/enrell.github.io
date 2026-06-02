@@ -1,0 +1,20 @@
+{{- $showToc := site.Params.showtoc | default true -}}
+{{- if isset .Params "toc" -}}
+  {{- with .Params.toc -}}
+    {{- if isset . "enable" -}}
+      {{- $showToc = .enable -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if isset .Params "showtoc" -}}
+  {{- $showToc = .Params.showtoc -}}
+{{- end -}}
+{{- $hasToc := and (eq .Kind "page") $showToc (ne .TableOfContents "") -}}
+{{- if $hasToc }}
+<li class="menu-toc-section">
+  <span class="menu-toc-heading">{{ i18n "toc" | default "Table of Contents" }}</span>
+  <div class="menu-toc-nav">
+    {{ .TableOfContents }}
+  </div>
+</li>
+{{- end }}
