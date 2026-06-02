@@ -10,15 +10,24 @@
 
 .nav {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-    grid-template-areas: "brand menu end";
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+    grid-template-areas: "brand menu search actions";
     align-items: center;
-    column-gap: clamp(20px, 3vw, 36px);
+    column-gap: clamp(12px, 2vw, 24px);
     width: 100%;
     max-width: calc(var(--nav-width) + var(--gap) * 2);
     min-height: var(--header-height);
     margin-inline: auto;
     padding-inline: clamp(var(--gap), 4vw, calc(var(--gap) * 1.75));
+}
+
+.nav-toolbar {
+    display: contents;
+}
+
+.nav:not(:has(.header-search)) {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: "brand menu actions";
 }
 
 .nav a {
@@ -122,8 +131,8 @@
     justify-content: center;
     list-style: none;
     margin: 0;
-    padding: 0;
-    gap: clamp(18px, 2.8vw, 40px);
+    padding: 0 clamp(8px, 1.5vw, 16px);
+    gap: clamp(14px, 2vw, 32px);
     width: max-content;
     max-width: 100%;
     overflow: hidden;
@@ -158,16 +167,19 @@
     border-bottom: 2px solid currentColor;
 }
 
-.nav-end {
-    grid-area: end;
+.nav-actions {
+    grid-area: actions;
     justify-self: end;
-    margin-inline-start: 8px;
     display: inline-flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 8px;
+    gap: 4px;
     flex-shrink: 0;
-    min-width: 0;
+}
+
+.header-search {
+    grid-area: search;
+    justify-self: end;
 }
 
 .nav-icon-link {
@@ -347,12 +359,26 @@ ul.lang-switch {
     .nav {
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto auto;
-        grid-template-areas: "brand end toggle";
+        grid-template-areas: "brand toolbar toggle";
         align-items: center;
         column-gap: 8px;
         row-gap: 0;
         max-width: none;
         padding-inline: clamp(16px, 4vw, var(--gap));
+    }
+
+    .nav-toolbar {
+        display: flex;
+        grid-area: toolbar;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 6px;
+        min-width: 0;
+    }
+
+    .header-search {
+        grid-area: unset;
+        flex-shrink: 1;
     }
 
     .nav-menu-toggle {
@@ -373,11 +399,6 @@ ul.lang-switch {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-    }
-
-    .nav-end {
-        grid-area: end;
-        justify-self: end;
     }
 
     #menu {

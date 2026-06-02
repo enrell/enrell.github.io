@@ -46,8 +46,9 @@
             {{- partial "menu-toc.html" . -}}
         </ul>
 
-        <div class="nav-end">
+        <div class="nav-toolbar">
             {{- partial "header_search.html" . -}}
+            <div class="nav-actions">
             {{- $githubUser := site.Params.social.GitHub -}}
             {{- if $githubUser -}}
             <a href="https://github.com/{{ $githubUser }}" class="nav-icon-link" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="{{ i18n "github_profile" | default "GitHub profile" }}">
@@ -109,6 +110,7 @@
                 </ul>
             </div>
             {{- end }}
+            </div>
         </div>
 
         <button id="nav-menu-toggle" class="nav-menu-toggle" aria-label="{{ i18n "open_menu" | default "Open menu" }}" aria-expanded="false" aria-controls="menu">

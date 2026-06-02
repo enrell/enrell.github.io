@@ -2,9 +2,9 @@
 
 .header-search {
     position: relative;
-    flex-shrink: 1;
+    flex-shrink: 0;
     min-width: 0;
-    width: clamp(140px, 16vw, 220px);
+    width: clamp(128px, 14vw, 200px);
 }
 
 .header-search-label {
