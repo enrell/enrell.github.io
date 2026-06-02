@@ -1,30 +1,21 @@
-/* Table of contents — separate column from article body */
+/* Table of contents — fixed in the left gutter; article stays centered */
 
 .post-page {
     width: 100%;
 }
 
-.post-page--with-toc {
-    display: grid;
-    grid-template-columns: minmax(200px, 240px) minmax(0, var(--main-width));
-    justify-content: center;
-    gap: clamp(24px, 4vw, 48px);
-    align-items: start;
-    max-width: calc(var(--nav-width) + var(--gap) * 2);
-    margin-inline: auto;
-}
-
 .post-page--with-toc .post-single {
-    min-width: 0;
     max-width: var(--main-width);
+    margin-inline: auto;
     width: 100%;
-    margin-inline: 0;
 }
 
 .post-toc-column {
-    position: sticky;
+    position: fixed;
+    z-index: 5;
+    left: var(--gap);
     top: calc(var(--header-height) + 1.25rem);
-    align-self: start;
+    width: min(220px, calc((100vw - var(--main-width)) / 2 - var(--gap) * 2));
     max-height: calc(100vh - var(--header-height) - 2.5rem);
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -156,11 +147,6 @@
     background: color-mix(in srgb, var(--border) 65%, transparent);
 }
 
-/* Wider main only when TOC column is present */
-.main:has(.post-page--with-toc) {
-    max-width: calc(var(--nav-width) + var(--gap) * 2);
-}
-
 /* Offset for fixed header when jumping to anchors */
 .post-content h1,
 .post-content h2,
@@ -171,21 +157,17 @@
     scroll-margin-top: calc(var(--header-height) + 1rem);
 }
 
-@media (max-width: 960px) {
-    .post-page--with-toc {
-        grid-template-columns: 1fr;
-        max-width: calc(var(--main-width) + var(--gap) * 2);
-        gap: var(--content-gap);
-    }
-
+/* Not enough gutter beside centered article — stack TOC above content */
+@media (max-width: 1100px) {
     .post-toc-column {
         position: static;
-        max-height: none;
-        overflow: visible;
-        order: -1;
+        left: auto;
+        width: 100%;
         max-width: var(--main-width);
         margin-inline: auto;
-        width: 100%;
+        margin-bottom: var(--content-gap);
+        max-height: none;
+        z-index: auto;
     }
 
     .post-toc-inner {
