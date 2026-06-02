@@ -5,6 +5,15 @@
     --radius-sm: 4px;
     --toc-link: var(--content);
     --toc-link-active: var(--primary);
+    --post-line-height: 1.7;
+}
+
+.post-content {
+    line-height: var(--post-line-height);
+}
+
+.post-content li {
+    line-height: var(--post-line-height);
 }
 
 /* Inline code — more horizontal breathing room */

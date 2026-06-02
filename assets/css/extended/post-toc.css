@@ -53,7 +53,7 @@ body:not(.list) .main {
     border: 1px solid var(--border);
     background: var(--code-bg);
     border-radius: var(--radius);
-    padding: 1.25rem 1.35rem;
+    padding: 1.65rem 1.35rem 1.35rem;
 }
 
 [data-theme="dark"] .post-toc {
@@ -61,7 +61,7 @@ body:not(.list) .main {
 }
 
 .post-toc-title {
-    margin: 0 0 0.85em;
+    margin: 0 0 1em;
     padding: 0;
     font-size: 0.8rem;
     font-weight: 700;
@@ -104,36 +104,64 @@ body:not(.list) .main {
 }
 
 .post-toc-inner li {
-    line-height: 1.5;
+    width: 100%;
+    line-height: 1.55;
     font-size: 0.9rem;
 }
 
 .post-toc-inner a {
+    position: relative;
     display: block;
-    padding: 0.2em 0 0.2em 0.55rem;
-    margin-inline-start: -0.55rem;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.4em 0.5em 0.4em calc(2px + 0.65rem);
+    margin: 0;
     color: var(--toc-link);
     text-decoration: none;
-    border-inline-start: 2px solid transparent;
-    transition: color 0.15s ease, border-color 0.15s ease;
     border-radius: var(--radius-sm);
+    transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.post-toc-inner a::before {
+    content: "";
+    position: absolute;
+    inset-block: 0.35em;
+    inset-inline-start: 0;
+    width: 2px;
+    border-radius: 1px;
+    background: transparent;
+    transition: background-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .post-toc-inner a:hover {
     color: var(--toc-link-active);
+    background: color-mix(in srgb, var(--border) 55%, transparent);
 }
 
 .post-toc-inner a.is-active,
 .post-toc-inner li.is-active > a {
     color: var(--toc-link-active);
-    font-weight: 500;
-    border-inline-start-color: var(--primary);
+    font-weight: 600;
+    background: color-mix(in srgb, var(--border) 40%, transparent);
+}
+
+.post-toc-inner a.is-active::before,
+.post-toc-inner li.is-active > a::before {
+    background: var(--primary);
+    box-shadow: 0 0 6px color-mix(in srgb, var(--primary) 45%, transparent);
+}
+
+[data-theme="dark"] .post-toc-inner a.is-active,
+[data-theme="dark"] .post-toc-inner li.is-active > a {
+    color: var(--primary);
+    text-shadow: 0 0 20px color-mix(in srgb, var(--primary) 25%, transparent);
 }
 
 .post-toc-inner a:active,
 .post-toc-inner a:focus-visible {
     color: var(--toc-link-active);
     outline: none;
+    background: color-mix(in srgb, var(--border) 65%, transparent);
 }
 
 /* Offset for fixed header when jumping to anchors */
