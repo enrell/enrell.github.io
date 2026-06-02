@@ -1,7 +1,11 @@
 /* Header layout and language switcher */
 
 .header {
-    position: relative;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--theme);
+    border-bottom: 1px solid var(--border);
 }
 
 .nav {
