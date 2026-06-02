@@ -1,0 +1,4 @@
+{{- if .IsPage }}
+{{- $tocSpy := resources.Get "js/toc-scroll-spy.js" | minify | fingerprint -}}
+<script src="{{ $tocSpy.RelPermalink }}" integrity="{{ $tocSpy.Data.Integrity }}" crossorigin="anonymous" defer></script>
+{{- end }}

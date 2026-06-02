@@ -1,0 +1,46 @@
+/* Shared UI tokens and cross-cutting polish */
+
+:root {
+    --radius: 6px;
+    --radius-sm: 4px;
+    --toc-link: var(--content);
+    --toc-link-active: var(--primary);
+}
+
+/* Inline code — more horizontal breathing room */
+.post-content :not(pre) > code {
+    padding: 0.15rem 0.4rem;
+    border-radius: var(--radius-sm);
+    margin-inline: 2px;
+}
+
+/* Rectilinear controls (avoid pill/circle mismatch with cards & TOC) */
+.top-link {
+    border-radius: var(--radius);
+}
+
+.pagination a {
+    border-radius: var(--radius);
+    line-height: 1.4;
+    padding: 8px 16px;
+}
+
+.copy-code {
+    border-radius: var(--radius-sm);
+}
+
+.post-tags a,
+.post-tags span,
+button.lang-toggle-btn,
+.nav-icon-link,
+.nav-menu-toggle,
+.lang-dropdown-menu a {
+    border-radius: var(--radius);
+}
+
+/* Hugo live-reload / IDE preview badge (injected outside theme CSS) */
+body > a[href*="localhost"],
+body > div[id*="hugo" i],
+body > div[class*="hugo" i] {
+    border-radius: var(--radius) !important;
+}

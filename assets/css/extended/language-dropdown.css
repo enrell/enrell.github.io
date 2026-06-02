@@ -54,7 +54,7 @@
     display: block;
     transform: none;
     margin: 0;
-    border-radius: 6px;
+    border-radius: var(--radius);
 }
 
 .nav-brand-text {
@@ -112,7 +112,7 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: clamp(12px, 2vw, 24px);
+    gap: clamp(18px, 2.8vw, 40px);
     min-width: 0;
     word-break: keep-all;
     white-space: nowrap;
@@ -267,7 +267,7 @@ ul.lang-switch {
     padding: 8px 12px;
     color: var(--primary);
     text-decoration: none;
-    border-radius: 6px;
+    border-radius: var(--radius);
     font-size: 13px;
     font-weight: 500;
     transition: background-color 0.2s ease, color 0.2s ease;

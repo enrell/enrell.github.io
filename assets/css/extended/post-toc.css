@@ -37,7 +37,7 @@ body:not(.list) .main {
 
 .post-toc-sidebar::-webkit-scrollbar-thumb {
     background: var(--tertiary);
-    border-radius: 3px;
+    border-radius: var(--radius-sm);
 }
 
 .post-main {
@@ -53,7 +53,7 @@ body:not(.list) .main {
     border: 1px solid var(--border);
     background: var(--code-bg);
     border-radius: var(--radius);
-    padding: 0.85em 1em;
+    padding: 1.25rem 1.35rem;
 }
 
 [data-theme="dark"] .post-toc {
@@ -61,7 +61,8 @@ body:not(.list) .main {
 }
 
 .post-toc-title {
-    margin: 0 0 0.65em;
+    margin: 0 0 0.85em;
+    padding: 0;
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.04em;
@@ -82,36 +83,57 @@ body:not(.list) .main {
 }
 
 .post-toc-inner ul ul {
-    margin-top: 0.3em;
-    margin-bottom: 0.3em;
+    margin-top: 0.35em;
+    margin-bottom: 0.35em;
     padding-inline-start: 0.9em;
     border-inline-start: 2px solid var(--border);
 }
 
+.post-toc-inner > nav > ul > li,
+.post-toc-inner > ul > li {
+    margin-bottom: 0.75rem;
+}
+
+.post-toc-inner > nav > ul > li:last-child,
+.post-toc-inner > ul > li:last-child {
+    margin-bottom: 0;
+}
+
+.post-toc-inner li li {
+    margin-bottom: 0.45rem;
+}
+
 .post-toc-inner li {
-    margin: 0.3em 0;
-    line-height: 1.4;
+    line-height: 1.5;
     font-size: 0.9rem;
 }
 
 .post-toc-inner a {
     display: block;
-    padding: 0.15em 0;
-    color: var(--secondary);
+    padding: 0.2em 0 0.2em 0.55rem;
+    margin-inline-start: -0.55rem;
+    color: var(--toc-link);
     text-decoration: none;
-    transition: color 0.15s ease;
-    border-radius: 4px;
+    border-inline-start: 2px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+    border-radius: var(--radius-sm);
 }
 
 .post-toc-inner a:hover {
-    color: var(--primary);
+    color: var(--toc-link-active);
+}
+
+.post-toc-inner a.is-active,
+.post-toc-inner li.is-active > a {
+    color: var(--toc-link-active);
+    font-weight: 500;
+    border-inline-start-color: var(--primary);
 }
 
 .post-toc-inner a:active,
 .post-toc-inner a:focus-visible {
-    color: var(--primary);
+    color: var(--toc-link-active);
     outline: none;
-    background: var(--code-bg);
 }
 
 /* Offset for fixed header when jumping to anchors */
