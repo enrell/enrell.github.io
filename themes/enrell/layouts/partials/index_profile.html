@@ -53,6 +53,62 @@
             {{- end }}
         </div>
         {{- end }}
+
+        {{- with hugo.Data.github }}
+        {{- $isPt := eq $.Lang "pt" -}}
+        <section class="github-overview" aria-labelledby="github-overview-title">
+            <div class="github-overview-header">
+                <div>
+                    <p class="github-eyebrow">GitHub</p>
+                    <h2 id="github-overview-title">
+                        {{- if $isPt -}}Open source, tooling e automação{{- else -}}Open source, tooling, and automation{{- end -}}
+                    </h2>
+                </div>
+                <a class="github-profile-link" href="{{ .profile.url }}" target="_blank" rel="noopener noreferrer">
+                    @{{ .profile.username }}
+                </a>
+            </div>
+
+            <p class="github-summary">
+                {{- .profile.bio -}}
+                <span>{{ .profile.location }}{{ with .profile.company }} / {{ . }}{{ end }}</span>
+            </p>
+
+            <dl class="github-metrics">
+                {{- range .metrics }}
+                <div class="github-metric">
+                    <dt>{{ if $isPt }}{{ .label_pt }}{{ else }}{{ .label_en }}{{ end }}</dt>
+                    <dd>{{ .value }}</dd>
+                </div>
+                {{- end }}
+            </dl>
+
+            <div class="github-languages" aria-label="{{ if $isPt }}Linguagens em destaque{{ else }}Highlighted languages{{ end }}">
+                {{- range .languages }}
+                <span>{{ . }}</span>
+                {{- end }}
+            </div>
+
+            <div class="github-pinned-header">
+                <h3>{{ if $isPt }}Repositórios pinados{{ else }}Pinned repositories{{ end }}</h3>
+                <span>{{ if $isPt }}Atualizado em {{ else }}Updated {{ end }}{{ .profile.updated }}</span>
+            </div>
+
+            <div class="github-pinned-grid">
+                {{- range .pinned }}
+                <a class="github-repo-card" href="{{ .url }}" target="_blank" rel="noopener noreferrer">
+                    <span class="github-repo-name">{{ .name }}</span>
+                    <span class="github-repo-description">{{ if $isPt }}{{ .description_pt }}{{ else }}{{ .description_en }}{{ end }}</span>
+                    <span class="github-repo-meta">
+                        {{- with .language }}<span>{{ . }}</span>{{ end -}}
+                        <span>{{ .stars }} stars</span>
+                        <span>{{ .forks }} forks</span>
+                    </span>
+                </a>
+                {{- end }}
+            </div>
+        </section>
+        {{- end }}
     </div>
     {{- end}}
 </div>

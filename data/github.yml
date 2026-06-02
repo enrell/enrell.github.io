@@ -1,0 +1,70 @@
+profile:
+  username: enrell
+  name: Enrell
+  url: https://github.com/enrell
+  company: IFPE
+  location: Brazil
+  bio: "Software Engineer | Maker | Rust | Python | TypeScript | AI-focused"
+  blog: https://enrell.github.io/en/
+  updated: "2026-06-02"
+metrics:
+  - label_en: Public repos
+    label_pt: Repos públicos
+    value: 31
+  - label_en: Source repos
+    label_pt: Repos autorais
+    value: 24
+  - label_en: Stars earned
+    label_pt: Stars recebidas
+    value: 23
+  - label_en: Starred repos
+    label_pt: Repos marcados
+    value: 410
+  - label_en: Followers
+    label_pt: Seguidores
+    value: 19
+  - label_en: Following
+    label_pt: Seguindo
+    value: 15
+languages:
+  - Rust
+  - Python
+  - Go
+  - TypeScript
+  - QML
+pinned:
+  - name: animesubs
+    url: https://github.com/enrell/animesubs
+    description_en: Desktop app to extract, translate and embed subtitles into videos.
+    description_pt: App desktop para extrair, traduzir e embutir legendas em vídeos.
+    language: Rust
+    stars: 6
+    forks: 0
+  - name: enrell.github.io
+    url: https://github.com/enrell/enrell.github.io
+    description_en: Personal blog and portfolio built with Hugo.
+    description_pt: Blog e portfólio pessoal construído com Hugo.
+    language: HTML
+    stars: 0
+    forks: 0
+  - name: boogle
+    url: https://github.com/enrell/boogle
+    description_en: Open-source meta search engine for free books.
+    description_pt: Meta buscador open source para livros gratuitos.
+    language: Python
+    stars: 2
+    forks: 2
+  - name: nxc-syntax
+    url: https://github.com/enrell/nxc-syntax
+    description_en: Syntax highlighting support for the Not eXactly C language used with LEGO Mindstorms.
+    description_pt: Suporte de syntax highlighting para Not eXactly C, usado com LEGO Mindstorms.
+    language: JavaScript
+    stars: 1
+    forks: 0
+  - name: audio-enhancer
+    url: https://github.com/enrell/audio-enhancer
+    description_en: Advanced audio reconstruction pipeline with neural super-resolution and denoising.
+    description_pt: Pipeline avançado de reconstrução de áudio com super-resolução neural e denoising.
+    language: Python
+    stars: 3
+    forks: 0
