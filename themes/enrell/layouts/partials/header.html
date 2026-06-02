@@ -20,6 +20,7 @@
         {{- $currentPage := . }}
         <ul id="menu">
             {{- range site.Menus.main }}
+            {{- if eq .Identifier "search" }}{{ continue }}{{ end }}
             {{- $menu_item_url := (cond (strings.HasSuffix .URL "/") .URL (printf "%s/" .URL) ) | relLangURL }}
             {{- $page_url:= $currentPage.Permalink | relLangURL }}
             {{- $is_search := eq (site.GetPage .KeyName).Layout `search` }}
@@ -46,6 +47,7 @@
         </ul>
 
         <div class="nav-end">
+            {{- partial "header_search.html" . -}}
             {{- $githubUser := site.Params.social.GitHub -}}
             {{- if $githubUser -}}
             <a href="https://github.com/{{ $githubUser }}" class="nav-icon-link" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="{{ i18n "github_profile" | default "GitHub profile" }}">

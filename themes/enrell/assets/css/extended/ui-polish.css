@@ -43,7 +43,8 @@
 button.lang-toggle-btn,
 .nav-icon-link,
 .nav-menu-toggle,
-.lang-dropdown-menu a {
+.lang-dropdown-menu a,
+.header-search-input {
     border-radius: var(--radius);
 }
 

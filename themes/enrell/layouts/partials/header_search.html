@@ -1,0 +1,18 @@
+{{- if site.Params.search.enable }}
+<div id="headerSearchbox" class="header-search" role="search">
+    <label class="header-search-label" for="headerSearchInput">{{ i18n "search" | default "Search" }}</label>
+    <input
+        id="headerSearchInput"
+        class="header-search-input"
+        type="search"
+        accesskey="/"
+        placeholder="{{ i18n "search_placeholder" | default "Search…" }}"
+        aria-label="{{ i18n "search" | default "Search" }}"
+        aria-controls="headerSearchResults"
+        aria-expanded="false"
+        aria-autocomplete="list"
+        autocomplete="off"
+        maxlength="64">
+    <ul id="headerSearchResults" class="header-search-results" role="listbox" aria-label="{{ i18n "search" | default "Search" }}" hidden></ul>
+</div>
+{{- end }}

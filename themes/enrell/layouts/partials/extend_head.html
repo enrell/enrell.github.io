@@ -4,6 +4,16 @@
 <script src="{{ $langDetectorJS.RelPermalink }}" integrity="{{ $langDetectorJS.Data.Integrity }}" crossorigin="anonymous" defer></script>
 <script src="{{ $langDropdownJS.RelPermalink }}" integrity="{{ $langDropdownJS.Data.Integrity }}" crossorigin="anonymous" defer></script>
 
+{{- if site.Params.search.enable }}
+{{- $searchIndexURL := printf "%sindex.json" site.Home.RelPermalink -}}
+<link rel="preload" as="fetch" href="{{ $searchIndexURL }}" crossorigin="anonymous">
+{{- $fuseOpts := site.Params.search.fuseOpts | default site.Params.fuseOpts -}}
+{{- $headerSearchJS := resources.Get "js/header-search.js" | js.Build (dict "params" (dict "indexUrl" $searchIndexURL "fuseOpts" $fuseOpts)) | minify | fingerprint -}}
+{{- $fusejs := resources.Get "js/fuse.basic.min.js" -}}
+{{- $searchBundle := (slice $fusejs $headerSearchJS) | resources.Concat "js/header-search.bundle.js" | fingerprint -}}
+<script src="{{ $searchBundle.RelPermalink }}" integrity="{{ $searchBundle.Data.Integrity }}" crossorigin="anonymous" defer></script>
+{{- end }}
+
 {{- /* Skip during `hugo server` (avoids ERR_BLOCKED_BY_CLIENT in local dev). */ -}}
 {{- with site.Params.cloudflareAnalytics.token }}
 {{- if not hugo.IsServer }}

@@ -43,10 +43,6 @@ languages:
           name: Tags
           url: tags
           weight: 4
-        - identifier: search
-          name: Search
-          url: search
-          weight: 5
   pt:
     label: "Português"
     locale: "pt-br"
@@ -78,10 +74,6 @@ languages:
           name: Tags
           url: tags
           weight: 4
-        - identifier: search
-          name: Buscar
-          url: search
-          weight: 5
 
 buildDrafts: false
 buildFuture: false
