@@ -67,3 +67,6 @@
 
 - id: select_language
   translation: "Select language"
+
+- id: github_profile
+  translation: "GitHub profile"

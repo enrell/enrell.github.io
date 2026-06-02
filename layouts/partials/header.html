@@ -51,6 +51,13 @@
         </ul>
 
         <div class="nav-end">
+            {{- $githubUser := site.Params.social.GitHub -}}
+            {{- if $githubUser -}}
+            <a href="https://github.com/{{ $githubUser }}" class="nav-icon-link" target="_blank" rel="noopener noreferrer" title="GitHub" aria-label="{{ i18n "github_profile" | default "GitHub profile" }}">
+                {{ partial "svg.html" (dict "name" "github") }}
+            </a>
+            {{- end }}
+
             {{- if (not site.Params.disableThemeToggle) }}
             <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="{{ i18n "toggle_theme" | default "Toggle theme" }}">
                 <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>

@@ -149,6 +149,28 @@
     flex-shrink: 0;
 }
 
+.nav-icon-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    color: var(--primary);
+    border-radius: var(--radius);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-icon-link:hover {
+    background-color: var(--code-bg);
+    color: var(--primary);
+}
+
+.nav-icon-link svg {
+    display: block;
+    width: 22px;
+    height: 22px;
+}
+
 button#theme-toggle {
     display: inline-flex;
     align-items: center;
