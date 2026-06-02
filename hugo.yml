@@ -4,31 +4,33 @@ theme: "PaperMod"
 pagination:
   pagerSize: 5
 
-languageCode: "en-us"
 defaultContentLanguage: en
 defaultContentLanguageInSubdir: true
+locale: "en-us"
 enableEmoji: true
 enableRobotsTXT: true
 enableGitInfo: true
 
 languages:
   en:
-    languageName: "English"
-    languageCode: "en-us"
+    label: "English"
+    locale: "en-us"
     weight: 1
     title: "Enrell's Blog"
     params:
       description: "Developer, Creator, Open Source Enthusiast - Building cool things with code"
+      profileMode:
+        enabled: true
+        title: "enrell"
+        subtitle: "Developer, Creator, Open Source Enthusiast"
+        imageUrl: "https://avatars.githubusercontent.com/u/60587839?v=4"
+        imageTitle: "enrell"
     menu:
       main:
         - identifier: home
           name: Home
           url: .
           weight: 1
-        - identifier: search
-          name: Search
-          url: search
-          weight: 3
         - identifier: posts
           name: Posts
           url: posts
@@ -36,28 +38,34 @@ languages:
         - identifier: categories
           name: Categories
           url: categories
-          weight: 4
+          weight: 3
         - identifier: tags
           name: Tags
           url: tags
+          weight: 4
+        - identifier: search
+          name: Search
+          url: search
           weight: 5
   pt:
-    languageName: "Português"
-    languageCode: "pt-br"
+    label: "Português"
+    locale: "pt-br"
     weight: 2
-    title: "Enrell's Blog"
+    title: "Blog do Enrell"
     params:
       description: "Desenvolvedor, Criador, Entusiasta Open Source"
+      profileMode:
+        enabled: true
+        title: "enrell"
+        subtitle: "Desenvolvedor, Criador, Entusiasta Open Source"
+        imageUrl: "https://avatars.githubusercontent.com/u/60587839?v=4"
+        imageTitle: "enrell"
     menu:
       main:
         - identifier: home
           name: Início
           url: .
           weight: 1
-        - identifier: search
-          name: Buscar
-          url: search
-          weight: 3
         - identifier: posts
           name: Posts
           url: posts
@@ -65,10 +73,14 @@ languages:
         - identifier: categories
           name: Categorias
           url: categories
-          weight: 4
+          weight: 3
         - identifier: tags
           name: Tags
           url: tags
+          weight: 4
+        - identifier: search
+          name: Buscar
+          url: search
           weight: 5
 
 buildDrafts: false
@@ -92,14 +104,13 @@ params:
   defaultTheme: auto
   disableThemeToggle: false
   displayFullLangName: true
-  languageDropdown: true
 
   ShowReadingTime: true
   ShowShareButtons: true
   ShowPostNavLinks: true
   ShowBreadCrumbs: true
   ShowCodeCopyButtons: true
-  ShowWordCount: true
+  ShowWordCount: false
   ShowRssButtonInSectionTermList: true
   UseHugoToc: true
   disableSpecial1stPost: false
@@ -117,19 +128,25 @@ params:
     emitMetadata: "0"
     inputPosition: "bottom"
     theme: "preferred_color_scheme"
-    lang: "en"
     loading: "lazy"
   hidemeta: false
   hideSummary: false
   showtoc: false
   tocopen: false
 
-  gitRepo: "https://github.com/enrell/myblog"
+  editPost:
+    URL: "https://github.com/enrell/enrell.github.io/edit/main/content"
+    appendFilePath: true
+
+  label:
+    text: enrell
+    iconSVG: |
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
 
   assets:
-    favicon: "<link / abs url>"
-    favicon16x16: "<link / abs url>"
-    favicon32x32: "<link / abs url>"
+    favicon: "/favicon.ico"
+    favicon16x16: "/favicon-16x16.png"
+    favicon32x32: "/favicon-32x32.png"
 
   app:
     title: "Enrell's Blog"
@@ -138,14 +155,6 @@ params:
     iconColor: "#1e1e2e"
     tileColor: "#1e1e2e"
 
-  header:
-    desktopMode: fixed
-    mobileMode: auto
-    title:
-      name: enrell
-      pre: '<i class="fas fa-code fa-fw" aria-hidden="true"></i>'
-      typeit: true
-
   footer:
     enable: true
     hugo: true
@@ -153,19 +162,6 @@ params:
     author: true
     since: 2025
     license: '<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
-
-  home:
-    rss: 10
-    profile:
-      enable: true
-      avatarURL: "https://avatars.githubusercontent.com/u/60587839?v=4"
-      title: enrell
-      subtitle: "Developer, Creator, Open Source Enthusiast"
-      typeit: true
-      social: true
-    posts:
-      enable: true
-      paginate: 6
 
   social:
     GitHub: enrell

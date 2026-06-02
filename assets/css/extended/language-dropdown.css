@@ -1,4 +1,5 @@
-/* Positioning in header */
+/* Header layout and language switcher */
+
 .nav {
     display: flex;
     flex-wrap: wrap;
@@ -17,6 +18,12 @@
     gap: 12px;
 }
 
+.logo a .logo-icon {
+    display: inline-flex;
+    vertical-align: middle;
+    margin-inline-end: 8px;
+}
+
 .nav-menu-toggle {
     display: none;
     border: 0;
@@ -25,7 +32,7 @@
     width: 44px;
     height: 44px;
     padding: 10px;
-    border-radius: 8px;
+    border-radius: var(--radius);
     align-items: center;
     justify-content: center;
     flex-direction: column;
@@ -75,17 +82,14 @@
     margin: auto 0;
 }
 
-/* Hide default PaperMod language switcher */
 ul.lang-switch {
     display: none !important;
 }
 
-/* Language Switcher Dropdown Styles */
 .lang-switch-dropdown {
     position: relative;
     display: inline-flex;
     align-items: center;
-    margin-left: 0;
     flex-shrink: 0;
 }
 
@@ -97,17 +101,17 @@ ul.lang-switch {
     border: none;
     cursor: pointer;
     padding: 6px 10px;
-    border-radius: 6px;
-    color: var(--entry-text-color);
+    border-radius: var(--radius);
+    color: var(--primary);
     font-size: 14px;
     transition: background-color 0.2s ease;
     white-space: nowrap;
-    flex-shrink: 0;
 }
 
 .lang-toggle-btn:hover,
-.lang-switch-dropdown:focus-within .lang-toggle-btn {
-    background-color: var(--hover-color);
+.lang-switch-dropdown:focus-within .lang-toggle-btn,
+.lang-switch-dropdown.open .lang-toggle-btn {
+    background-color: var(--code-bg);
 }
 
 .lang-toggle-btn svg {
@@ -119,64 +123,63 @@ ul.lang-switch {
 .current-lang {
     font-weight: 600;
     font-size: 13px;
-    letter-spacing: 0.5px;
 }
 
 .lang-dropdown-menu {
     display: none;
     position: absolute;
-    top: 100%;
+    top: calc(100% + 4px);
     right: 0;
     min-width: 130px;
-    background-color: #5555;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    background-color: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
     list-style: none;
     margin: 0;
+    padding: 6px;
     z-index: 1000;
 }
 
-/* Exibe o menu no foco, com a classe .open (do seu JS) ou no hover */
 .lang-switch-dropdown.open .lang-dropdown-menu,
-.lang-switch-dropdown:focus-within .lang-dropdown-menu,
-.lang-switch-dropdown:hover .lang-dropdown-menu {
+.lang-switch-dropdown:focus-within .lang-dropdown-menu {
     display: block;
 }
 
 .lang-dropdown-menu li {
     margin: 0;
-    padding: 0;
+    padding: 2px 0;
 }
 
 .lang-dropdown-menu a {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 4px 8px;
-    color: var(--entry-text-color);
+    padding: 8px 12px;
+    color: var(--primary);
     text-decoration: none;
     border-radius: 6px;
     font-size: 13px;
-    font-weight: 400;
-    transition: all 0.2s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    white-space: nowrap;
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .lang-dropdown-menu a:hover {
-    background-color: var(--hover-color);
-    color: var(--primary-color);
+    background-color: var(--code-bg);
+    color: var(--primary);
 }
 
 .lang-dropdown-menu a.active {
-    background-color: var(--primary-color);
-    color: var(--primary-text-color);
+    background-color: var(--primary);
+    color: var(--theme);
 }
 
 .lang-dropdown-menu a.active:hover {
     opacity: 0.9;
+}
+
+.nav-backdrop {
+    display: none;
 }
 
 @media (max-width: 768px) {
@@ -197,6 +200,18 @@ ul.lang-switch {
     .nav .logo {
         justify-self: center;
         min-width: 0;
+    }
+
+    .nav-backdrop {
+        display: none;
+        position: fixed;
+        inset: var(--header-height) 0 0 0;
+        background: rgba(0, 0, 0, 0.35);
+        z-index: 998;
+    }
+
+    .nav.mobile-menu-open .nav-backdrop {
+        display: block;
     }
 
     #menu {
@@ -250,11 +265,5 @@ ul.lang-switch {
 
     .lang-toggle-btn {
         padding: 6px;
-    }
-
-    .lang-dropdown-menu {
-        right: 0;
-        left: auto;
-        min-width: 80px;
     }
 }

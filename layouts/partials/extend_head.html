@@ -1,4 +1,8 @@
 {{- /* Extended head custom content */ -}}
-<link rel="stylesheet" href="{{ "css/language-dropdown.css" | relURL }}">
-<script src="{{ "js/language-detector.js" | relURL }}" defer></script>
-<script src="{{ "js/language-dropdown.js" | relURL }}" defer></script>
+{{- $langDropdownJS := resources.Get "js/language-dropdown.js" | minify | fingerprint -}}
+{{- $langDetectorJS := resources.Get "js/language-detector.js" | minify | fingerprint -}}
+<script src="{{ $langDetectorJS.RelPermalink }}" integrity="{{ $langDetectorJS.Data.Integrity }}" crossorigin="anonymous" defer></script>
+<script src="{{ $langDropdownJS.RelPermalink }}" integrity="{{ $langDropdownJS.Data.Integrity }}" crossorigin="anonymous" defer></script>
+
+<!-- Cloudflare Web Analytics -->
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "b9d92c55a0474f36b18d702ebe125c73"}'></script>

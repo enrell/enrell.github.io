@@ -58,3 +58,12 @@
 
 - id: word_count
   translation: "Contagem de palavras"
+
+- id: open_menu
+  translation: "Abrir menu"
+
+- id: toggle_theme
+  translation: "Alternar tema"
+
+- id: select_language
+  translation: "Selecionar idioma"
