@@ -13,11 +13,12 @@
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     grid-template-areas: "brand menu end";
     align-items: center;
-    column-gap: 16px;
+    column-gap: clamp(20px, 3vw, 36px);
     width: 100%;
+    max-width: calc(var(--nav-width) + var(--gap) * 2);
     min-height: var(--header-height);
     margin-inline: auto;
-    padding: 0 clamp(12px, 2.5vw, var(--gap));
+    padding-inline: clamp(var(--gap), 4vw, calc(var(--gap) * 1.75));
 }
 
 .nav a {
@@ -28,6 +29,7 @@
 .nav-brand {
     grid-area: brand;
     justify-self: start;
+    margin-inline-end: 8px;
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -159,6 +161,7 @@
 .nav-end {
     grid-area: end;
     justify-self: end;
+    margin-inline-start: 8px;
     display: inline-flex;
     align-items: center;
     justify-content: flex-end;
@@ -345,8 +348,10 @@ ul.lang-switch {
         grid-template-columns: minmax(0, 1fr) auto auto;
         grid-template-areas: "brand end toggle";
         align-items: center;
-        column-gap: 4px;
+        column-gap: 8px;
         row-gap: 0;
+        max-width: none;
+        padding-inline: clamp(16px, 4vw, var(--gap));
     }
 
     .nav-menu-toggle {
