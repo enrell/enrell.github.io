@@ -1,11 +1,5 @@
 <header class="header">
     <nav class="nav">
-        <button id="nav-menu-toggle" class="nav-menu-toggle" aria-label="{{ i18n "open_menu" | default "Open menu" }}" aria-expanded="false" aria-controls="menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-
         {{- $label_text := site.Params.label.text | default site.Params.header.title.name | default site.Title -}}
         {{- if site.Title }}
         <a class="nav-brand" href="{{ "" | relLangURL }}" accesskey="h" title="{{ $label_text }} (Alt + H)">
@@ -112,6 +106,12 @@
             </div>
             {{- end }}
         </div>
+
+        <button id="nav-menu-toggle" class="nav-menu-toggle" aria-label="{{ i18n "open_menu" | default "Open menu" }}" aria-expanded="false" aria-controls="menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
     </nav>
     <div class="nav-backdrop" aria-hidden="true"></div>
 </header>

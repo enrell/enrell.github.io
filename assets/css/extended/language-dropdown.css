@@ -304,22 +304,23 @@ ul.lang-switch {
 @media (max-width: 768px) {
     .nav {
         display: grid;
-        grid-template-columns: 44px minmax(0, 1fr) auto;
-        grid-template-areas: "toggle brand end";
+        grid-template-columns: minmax(0, 1fr) auto auto;
+        grid-template-areas: "brand end toggle";
         align-items: center;
-        column-gap: 8px;
+        column-gap: 4px;
         row-gap: 0;
     }
 
     .nav-menu-toggle {
         display: flex;
         grid-area: toggle;
+        justify-self: end;
     }
 
     .nav-brand {
         grid-area: brand;
-        justify-self: center;
-        justify-content: center;
+        justify-self: start;
+        justify-content: flex-start;
         min-width: 0;
         max-width: 100%;
     }
