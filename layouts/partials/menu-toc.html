@@ -14,7 +14,7 @@
 <li class="menu-toc-section">
   <span class="menu-toc-heading">{{ i18n "toc" | default "Table of Contents" }}</span>
   <div class="menu-toc-nav">
-    {{ .TableOfContents }}
+    {{ replace .TableOfContents "id=\"TableOfContents\"" "id=\"MenuTableOfContents\"" | safeHTML }}
   </div>
 </li>
 {{- end }}

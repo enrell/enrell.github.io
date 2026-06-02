@@ -362,16 +362,12 @@ ul.lang-switch {
         display: flex;
     }
 
-    #menu li {
+    #menu > li:not(.menu-toc-section) {
         width: 100%;
         border-bottom: 1px solid var(--border);
     }
 
-    #menu li:last-child {
-        border-bottom: none;
-    }
-
-    #menu li a {
+    #menu > li:not(.menu-toc-section) > a {
         display: block;
         width: 100%;
         padding: 14px 0;
