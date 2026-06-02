@@ -14,12 +14,6 @@
 {{- $hasToc := and $showToc (ne .TableOfContents "") -}}
 
 <div class="post-page{{ if $hasToc }} post-page--with-toc{{ end }}">
-  {{- if $hasToc }}
-  <aside class="post-toc-column" aria-label="{{ i18n "toc" | default "Table of Contents" }}">
-    {{- partial "toc.html" . }}
-  </aside>
-  {{- end }}
-
   <article class="post-single">
     <header class="post-header">
       {{ partial "breadcrumbs.html" . }}
@@ -48,6 +42,13 @@
       </div>
       {{- end }}
     </header>
+
+    {{- if $hasToc }}
+    <aside class="post-toc-column" aria-label="{{ i18n "toc" | default "Table of Contents" }}">
+      {{- partial "toc.html" . }}
+    </aside>
+    {{- end }}
+
     {{- $isHidden := (.Param "cover.hiddenInSingle") | default (.Param "cover.hidden") | default false }}
     {{- partial "cover.html" (dict "cxt" . "IsSingle" true "isHidden" $isHidden) }}
 

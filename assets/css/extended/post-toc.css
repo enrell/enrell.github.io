@@ -1,4 +1,9 @@
-/* TOC fixed in gutter; article keeps normal centered width in .main */
+/* TOC: fixed gutter on desktop, collapsible card in article flow on mobile */
+
+:root {
+    --toc-width: 220px;
+    --toc-breakpoint: 1100px;
+}
 
 .post-page {
     width: 100%;
@@ -11,20 +16,16 @@
 }
 
 .post-toc-column {
-    --toc-width: 220px;
+    width: 100%;
+    margin-bottom: var(--content-gap);
+}
+
+/* Desktop: coordinates set by JS (left, top, max-height) */
+.post-toc-column.post-toc-column--fixed {
     position: fixed;
     z-index: 5;
     width: var(--toc-width);
-    /* right edge sits just left of the article / title column */
-    left: max(
-        var(--gap),
-        calc(
-            (100vw - min(100vw, var(--main-width) + var(--gap) * 2)) / 2
-                - var(--toc-width)
-                - var(--gap)
-        )
-    );
-    max-height: calc(100vh - var(--header-height) - 2rem);
+    margin-bottom: 0;
     overflow-y: auto;
     overscroll-behavior: contain;
     padding-inline-end: 4px;
@@ -44,21 +45,53 @@
     border: 1px solid var(--border);
     background: var(--code-bg);
     border-radius: var(--radius);
-    padding: 1.65rem 1.35rem 1.35rem;
 }
 
 [data-theme="dark"] .post-toc {
     background: var(--entry);
 }
 
+.post-toc-disclosure {
+    margin: 0;
+}
+
+.post-toc-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    list-style: none;
+    cursor: pointer;
+    padding: 1.1rem 1.25rem;
+    user-select: none;
+}
+
+.post-toc-summary::-webkit-details-marker {
+    display: none;
+}
+
 .post-toc-title {
-    margin: 0 0 1em;
-    padding: 0;
+    margin: 0;
     font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--secondary);
+}
+
+.post-toc-chevron {
+    display: inline-flex;
+    flex-shrink: 0;
+    color: var(--secondary);
+    transition: transform 0.2s ease;
+}
+
+.post-toc-disclosure[open] .post-toc-chevron {
+    transform: rotate(180deg);
+}
+
+.post-toc-inner {
+    padding: 0 1.25rem 1.15rem;
 }
 
 .post-toc-inner nav,
@@ -164,21 +197,45 @@
     scroll-margin-top: calc(var(--header-height) + 1rem);
 }
 
-@media (max-width: 1100px) {
+/* Desktop: always expanded, summary acts as heading only */
+@media (min-width: 1101px) {
     .post-toc-column {
-        position: static;
-        left: auto;
-        top: auto !important;
-        width: 100%;
-        max-width: var(--main-width);
-        margin-inline: auto;
-        margin-bottom: var(--content-gap);
-        max-height: none;
-        z-index: auto;
+        margin-bottom: 0;
+    }
+
+    .post-toc {
+        padding: 1.65rem 1.35rem 1.35rem;
+    }
+
+    .post-toc-summary {
+        pointer-events: none;
+        cursor: default;
+        padding: 0 0 1em;
+    }
+
+    .post-toc-chevron {
+        display: none;
     }
 
     .post-toc-inner {
-        max-height: 12rem;
+        padding: 0;
+    }
+}
+
+/* Mobile / narrow: in-flow card below title */
+@media (max-width: 1100px) {
+    .post-toc-column {
+        position: static !important;
+        left: auto !important;
+        top: auto !important;
+        width: 100% !important;
+        max-width: none !important;
+        max-height: none !important;
+    }
+
+    .post-toc-inner {
+        max-height: min(50vh, 20rem);
         overflow-y: auto;
+        overscroll-behavior: contain;
     }
 }
