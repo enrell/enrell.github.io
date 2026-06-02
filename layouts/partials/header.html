@@ -5,35 +5,23 @@
             <span></span>
             <span></span>
         </button>
-        <div class="nav-backdrop" aria-hidden="true"></div>
 
-        <div class="logo">
-            {{- $label_text := site.Params.label.text | default site.Params.header.title.name | default site.Title -}}
-            {{- if site.Title }}
-            <a href="{{ "" | relLangURL }}" accesskey="h" title="{{ $label_text }} (Alt + H)">
-                {{- if site.Params.label.iconSVG -}}
-                    <span class="logo-icon">{{ site.Params.label.iconSVG | safeHTML }}</span>
-                {{- else if site.Params.label.icon -}}
-                    {{- $img := resources.Get site.Params.label.icon -}}
-                    {{- if $img -}}
-                        <img src="{{ $img.Permalink }}" alt="" aria-hidden="true" height="{{ site.Params.label.iconHeight | default "30" }}">
-                    {{- else -}}
-                        <img src="{{ site.Params.label.icon | absURL }}" alt="" aria-hidden="true" height="{{ site.Params.label.iconHeight | default "30" }}">
-                    {{- end -}}
+        {{- $label_text := site.Params.label.text | default site.Params.header.title.name | default site.Title -}}
+        {{- if site.Title }}
+        <a class="nav-brand" href="{{ "" | relLangURL }}" accesskey="h" title="{{ $label_text }} (Alt + H)">
+            {{- if site.Params.label.iconSVG -}}
+                <span class="logo-icon">{{ site.Params.label.iconSVG | safeHTML }}</span>
+            {{- else if site.Params.label.icon -}}
+                {{- $img := resources.Get site.Params.label.icon -}}
+                {{- if $img -}}
+                    <img src="{{ $img.Permalink }}" alt="" aria-hidden="true" height="{{ site.Params.label.iconHeight | default "30" }}">
+                {{- else -}}
+                    <img src="{{ site.Params.label.icon | absURL }}" alt="" aria-hidden="true" height="{{ site.Params.label.iconHeight | default "30" }}">
                 {{- end -}}
-                {{- $label_text -}}
-            </a>
-            {{- end }}
-
-            <div class="logo-switches">
-                {{- if (not site.Params.disableThemeToggle) }}
-                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="{{ i18n "toggle_theme" | default "Toggle theme" }}">
-                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                </button>
-                {{- end }}
-            </div>
-        </div>
+            {{- end -}}
+            <span class="nav-brand-text">{{ $label_text }}</span>
+        </a>
+        {{- end }}
 
         {{- $currentPage := . }}
         <ul id="menu">
@@ -62,7 +50,15 @@
             {{- end }}
         </ul>
 
-        {{- if (not site.Params.disableLangToggle) }}
+        <div class="nav-end">
+            {{- if (not site.Params.disableThemeToggle) }}
+            <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="{{ i18n "toggle_theme" | default "Toggle theme" }}">
+                <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            </button>
+            {{- end }}
+
+            {{- if (not site.Params.disableLangToggle) }}
             {{- $page := . }}
             <div class="lang-switch-dropdown">
                 <button id="lang-toggle" class="lang-toggle-btn" aria-label="{{ i18n "select_language" | default "Select language" }}" aria-haspopup="true" aria-expanded="false">
@@ -106,6 +102,8 @@
                     {{- end -}}
                 </ul>
             </div>
-        {{- end }}
+            {{- end }}
+        </div>
     </nav>
+    <div class="nav-backdrop" aria-hidden="true"></div>
 </header>

@@ -9,20 +9,27 @@
         }
     }
 
+    var header = document.querySelector('.header');
     var nav = document.querySelector('.nav');
     var navMenuToggle = document.getElementById('nav-menu-toggle');
     var menu = document.getElementById('menu');
-    var navBackdrop = document.querySelector('.nav-backdrop');
+    var navBackdrop = document.querySelector('.header .nav-backdrop');
 
     if (nav && navMenuToggle && menu) {
         function closeMobileMenu() {
             nav.classList.remove('mobile-menu-open');
+            if (header) {
+                header.classList.remove('mobile-menu-open');
+            }
             navMenuToggle.setAttribute('aria-expanded', 'false');
             document.body.style.overflow = '';
         }
 
         function openMobileMenu() {
             nav.classList.add('mobile-menu-open');
+            if (header) {
+                header.classList.add('mobile-menu-open');
+            }
             navMenuToggle.setAttribute('aria-expanded', 'true');
             document.body.style.overflow = 'hidden';
         }
