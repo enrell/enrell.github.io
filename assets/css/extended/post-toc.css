@@ -11,11 +11,13 @@
 }
 
 .post-toc-column {
+    --toc-width: 220px;
     position: fixed;
     z-index: 5;
-    left: var(--gap);
     top: calc(var(--header-height) + 1.25rem);
-    width: min(220px, calc((100vw - var(--main-width)) / 2 - var(--gap) * 2));
+    width: var(--toc-width);
+    /* sit in the left gutter, just before the centered article */
+    left: max(1.5rem, calc((100vw - var(--main-width)) / 2 - var(--toc-width) - var(--gap) * 1.5));
     max-height: calc(100vh - var(--header-height) - 2.5rem);
     overflow-y: auto;
     overscroll-behavior: contain;
