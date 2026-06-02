@@ -10,10 +10,11 @@
 
 .nav {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto auto;
-    grid-template-areas: "brand menu search actions";
+    /* Equal side tracks keep the menu centered; mins reserve space for logo + search/icons */
+    grid-template-columns: minmax(9rem, 1fr) auto minmax(13rem, 1fr);
+    grid-template-areas: "start menu end";
     align-items: center;
-    column-gap: clamp(12px, 2vw, 24px);
+    column-gap: clamp(16px, 2.5vw, 32px);
     width: 100%;
     max-width: calc(var(--nav-width) + var(--gap) * 2);
     min-height: var(--header-height);
@@ -22,12 +23,14 @@
 }
 
 .nav-toolbar {
-    display: contents;
-}
-
-.nav:not(:has(.header-search)) {
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    grid-template-areas: "brand menu actions";
+    grid-area: end;
+    justify-self: end;
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .nav a {
@@ -36,9 +39,8 @@
 }
 
 .nav-brand {
-    grid-area: brand;
+    grid-area: start;
     justify-self: start;
-    margin-inline-end: 8px;
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -131,10 +133,10 @@
     justify-content: center;
     list-style: none;
     margin: 0;
-    padding: 0 clamp(8px, 1.5vw, 16px);
+    padding: 0;
     gap: clamp(14px, 2vw, 32px);
     width: max-content;
-    max-width: 100%;
+    max-width: calc(100% - 1rem);
     overflow: hidden;
     word-break: keep-all;
     white-space: nowrap;
@@ -168,18 +170,11 @@
 }
 
 .nav-actions {
-    grid-area: actions;
-    justify-self: end;
     display: inline-flex;
     align-items: center;
     justify-content: flex-end;
     gap: 4px;
     flex-shrink: 0;
-}
-
-.header-search {
-    grid-area: search;
-    justify-self: end;
 }
 
 .nav-icon-link {
@@ -359,7 +354,7 @@ ul.lang-switch {
     .nav {
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto auto;
-        grid-template-areas: "brand toolbar toggle";
+        grid-template-areas: "start toolbar toggle";
         align-items: center;
         column-gap: 8px;
         row-gap: 0;
@@ -377,7 +372,6 @@ ul.lang-switch {
     }
 
     .header-search {
-        grid-area: unset;
         flex-shrink: 1;
     }
 
@@ -388,7 +382,7 @@ ul.lang-switch {
     }
 
     .nav-brand {
-        grid-area: brand;
+        grid-area: start;
         justify-self: start;
         justify-content: flex-start;
         min-width: 0;
