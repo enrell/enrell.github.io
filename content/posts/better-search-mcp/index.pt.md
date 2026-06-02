@@ -1,10 +1,10 @@
 ---
 title: "Eu Reescrevi Meu MCP em Crystal para Go — E Ficou Melhor: Better Search MCP"
 date: 2026-04-21
-lastmod: 2026-04-21
+lastmod: 2026-06-02
 draft: false
 author: "enrell"
-description: "Eu já tinha construído um MCP em Crystal para busca web e extração de conteúdo. Então reescrevi em Go com extração mais inteligente, respostas estruturadas e batch fetching. Aqui está o porquê — e o que mudou."
+description: "Eu já tinha construído um MCP em Crystal para busca web e extração de conteúdo. Reescrevi em Go com extração mais inteligente, respostas estruturadas e batch fetching — e depois simplifiquei a stack removendo o Byparr. Aqui está o porquê e o que mudou."
 
 tags: ["mcp", "go", "search", "searxng", "open-source", "content-extraction"]
 categories: ["Programming", "Announcement"]
@@ -58,7 +58,7 @@ Três razões, igual da última vez mas diferentes:
 
 ## Conheça o Better Search MCP
 
-**Better Search MCP** é a reescrita em Go que faz tudo que a versão em Crystal fazia — e faz melhor. Mesmas duas ferramentas: busca e fetch. Mesma stack SearXNG + Byparr. Mas a extração é mais inteligente, as respostas são estruturadas, e o batch fetching tem controle real.
+**Better Search MCP** é a reescrita em Go que faz tudo que a versão em Crystal fazia — e faz melhor. Mesmas duas ferramentas: busca e fetch. Busca via SearXNG; fetch via HTTP direto na URL alvo. A extração é mais inteligente, as respostas são estruturadas, e o batch fetching tem controle real.
 
 ```bash
 go install github.com/enrell/better-search@latest
@@ -153,6 +153,20 @@ Todo parâmetro que você quereria:
 
 URLs em batch preservam ordem. URLs duplicadas são mantidas. O array de resultados tem a mesma cardinalidade que a entrada. Sem surpresas.
 
+### Stack Simplificada: Sem Byparr
+
+Na primeira versão em Go, o `web_fetch` ainda dependia do Byparr — o mesmo proxy anti-captcha da versão em Crystal. Funcionava, mas era mais um serviço para subir, configurar e manter.
+
+Hoje o fetch é HTTP direto na URL. O servidor baixa o HTML, extrai o conteúdo legível e converte para Markdown. Para busca, você ainda precisa do SearXNG. Para fetch, não precisa mais de nada além do próprio MCP.
+
+| Antes | Agora |
+|-------|-------|
+| SearXNG + Byparr | Só SearXNG (para busca) |
+| `BYPARR_URL` na config | Removido |
+| Proxy anti-bot no fetch | HTTP direto com User-Agent padrão |
+
+O trade-off é honesto: setup mais simples, mas páginas com JavaScript pesado ou proteção anti-bot podem degradar — o servidor só vê o HTML retornado, não um DOM de browser depois do render client-side. Para a maioria dos artigos e docs, funciona bem.
+
 ### Concorrência Que Escala
 
 O batch fetch usa um padrão de semáforo — canais do Go agindo como semáforo contador:
@@ -179,7 +193,7 @@ Mesma ideia que as fibers do Crystal, mas goroutines do Go são igualmente leves
 
 ### Validação de Config na Inicialização
 
-Configuração inválida falha rápido. Se `SEARXNG_URL` ou `BYPARR_URL` não é uma URL HTTP/HTTPS válida com um host, o servidor se recusa a iniciar:
+Configuração inválida falha rápido. Se `SEARXNG_URL` não é uma URL HTTP/HTTPS válida com host, o servidor se recusa a iniciar:
 
 ```
 configuration error: SEARXNG_URL must be a valid http or https URL with a host
@@ -206,15 +220,15 @@ Set `LOG_LEVEL=DEBUG` para ver tudo. Set `LOG_LEVEL=ERROR` para silêncio. Produ
 | Scoring de Conteúdo | Motor heurístico custom | Boost/penalidade por pattern matching |
 | Rendering Markdown | Conversor DOM-based | Preserva estrutura, não só texto |
 | Protocolo MCP | JSON-RPC sobre stdio | Padrão, sem overhead de HTTP |
-| Clientes HTTP | Clientes SearXNG + Byparr | Separação limpa, testável |
+| Cliente HTTP | SearXNG (busca) + fetch direto | Um serviço externo para busca |
 
 ## Stats de Código
 
 ```
-2146 linhas de Go em todo o projeto.
+~2060 linhas de Go em todo o projeto.
 ```
 
-Isso é um MCP server completo com busca, batch fetch, extração de conteúdo, rendering Markdown, respostas estruturadas, validação de config e logging de requests. Em 2146 linhas.
+Isso é um MCP server completo com busca, batch fetch, extração de conteúdo, rendering Markdown, respostas estruturadas, validação de config e logging de requests — sem o client Byparr que existia na primeira versão em Go.
 
 A standard library do Go faz boa parte do trabalho pesado. Sem framework. Sem ORM. Sem mágica.
 
@@ -222,14 +236,14 @@ A standard library do Go faz boa parte do trabalho pesado. Sem framework. Sem OR
 
 ```
 cmd/server/            → Entrypoint do binário
-internal/clients/      → Clientes HTTP para SearXNG e Byparr
+internal/clients/      → Cliente SearXNG (busca) e fetch HTTP direto
 internal/config/       → Carregamento e validação de config
 internal/extractor/    → Extração de conteúdo e rendering Markdown
 internal/mcp/          → Servidor JSON-RPC / MCP e registro de tools
 internal/tools/        → Orquestração de tools e modelos de resposta
 ```
 
-Cada package tem uma única responsabilidade. O extrator não sabe sobre MCP. O servidor MCP não sabe sobre Byparr. O package tools orquestra as peças. Limpo, testável e fácil de extender.
+Cada package tem uma única responsabilidade. O extrator não sabe sobre MCP. O servidor MCP não sabe sobre HTTP. O package tools orquestra as peças. Limpo, testável e fácil de extender.
 
 ## Como Funciona
 
@@ -239,7 +253,7 @@ Assistente de IA → Request MCP → better-search
 searxng_web_search() ou web_fetch()
     ↓
 Busca → SearXNG → Resultados
-Fetch → Byparr → HTML → Extrair → Markdown
+Fetch → HTTP direto → HTML → Extrair → Markdown
     ↓
 Resposta estruturada → De volta para a IA
 ```
@@ -278,7 +292,6 @@ Sem framework web. Sem router. Sem chain de middleware. O servidor MCP lê JSON-
       "command": ["$HOME/go/bin/better-search"],
       "environment": {
         "SEARXNG_URL": "http://localhost:8888",
-        "BYPARR_URL": "http://localhost:8191",
         "LOG_LEVEL": "INFO"
       }
     }
@@ -288,6 +301,17 @@ Sem framework web. Sem router. Sem chain de middleware. O servidor MCP lê JSON-
 
 Adicione na sua config do OpenCode ou Claude Code. Reinicie. Sua IA agora pode buscar e fetchar — com respostas estruturadas.
 
+Variáveis de ambiente suportadas:
+
+| Variável | Descrição | Padrão |
+| --- | --- | --- |
+| `SEARXNG_URL` | URL base do SearXNG | `http://localhost:8080` |
+| `LOG_LEVEL` | `DEBUG`, `INFO`, `WARN` ou `ERROR` | `INFO` |
+| `MCP_TIMEOUT` | Timeout em segundos para requests externos | `30` |
+| `MAX_CONCURRENT_REQUESTS` | Paralelismo máximo no batch fetch | `30` |
+
+O README do repositório inclui um prompt para agentes de código instalarem SearXNG e o MCP de ponta a ponta — útil se você quer automatizar o setup local.
+
 ## Experimente
 
 ```bash
@@ -296,7 +320,6 @@ go install github.com/enrell/better-search@latest
 
 # Rodar localmente com logging de debug
 SEARXNG_URL=http://localhost:8888 \
-BYPARR_URL=http://localhost:8191 \
 LOG_LEVEL=DEBUG \
 better-search
 ```
