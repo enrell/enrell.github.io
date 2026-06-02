@@ -290,9 +290,9 @@ ul.lang-switch {
 .nav-backdrop {
     display: none;
     position: fixed;
-    inset: var(--header-height) 0 0 0;
+    inset: 0;
     background: rgba(0, 0, 0, 0.35);
-    z-index: 998;
+    z-index: 1000;
     pointer-events: none;
 }
 
@@ -302,6 +302,27 @@ ul.lang-switch {
 }
 
 @media (max-width: 768px) {
+    .header.mobile-menu-open {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1002;
+        background: var(--theme);
+        border-bottom: 1px solid var(--border);
+    }
+
+    html.mobile-menu-open,
+    html.mobile-menu-open body {
+        overflow: hidden;
+        height: 100%;
+    }
+
+    body.mobile-menu-open {
+        position: fixed;
+        width: 100%;
+        touch-action: none;
+    }
     .nav {
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto auto;
@@ -338,28 +359,30 @@ ul.lang-switch {
 
     #menu {
         display: none;
-        grid-column: 1 / -1;
+    }
+
+    .nav.mobile-menu-open #menu {
+        display: flex;
         position: fixed;
         top: var(--header-height);
         left: 0;
         right: 0;
         bottom: 0;
+        width: 100%;
         flex: none;
         flex-direction: column;
         align-items: stretch;
         justify-content: flex-start;
         margin: 0;
-        padding: 16px 20px;
+        padding: 16px 20px 24px;
         background: var(--theme);
-        border-top: 1px solid var(--border);
+        border-top: none;
         gap: 0;
         overflow-y: auto;
         overflow-x: hidden;
-        z-index: 999;
-    }
-
-    .nav.mobile-menu-open #menu {
-        display: flex;
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        z-index: 1001;
     }
 
     #menu > li:not(.menu-toc-section) {

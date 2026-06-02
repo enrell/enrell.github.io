@@ -16,13 +16,29 @@
     var navBackdrop = document.querySelector('.header .nav-backdrop');
 
     if (nav && navMenuToggle && menu) {
+        var scrollLockY = 0;
+
+        function lockPageScroll() {
+            scrollLockY = window.scrollY;
+            document.documentElement.classList.add('mobile-menu-open');
+            document.body.classList.add('mobile-menu-open');
+            document.body.style.top = '-' + scrollLockY + 'px';
+        }
+
+        function unlockPageScroll() {
+            document.documentElement.classList.remove('mobile-menu-open');
+            document.body.classList.remove('mobile-menu-open');
+            document.body.style.top = '';
+            window.scrollTo(0, scrollLockY);
+        }
+
         function closeMobileMenu() {
             nav.classList.remove('mobile-menu-open');
             if (header) {
                 header.classList.remove('mobile-menu-open');
             }
             navMenuToggle.setAttribute('aria-expanded', 'false');
-            document.body.style.overflow = '';
+            unlockPageScroll();
         }
 
         function openMobileMenu() {
@@ -31,7 +47,7 @@
                 header.classList.add('mobile-menu-open');
             }
             navMenuToggle.setAttribute('aria-expanded', 'true');
-            document.body.style.overflow = 'hidden';
+            lockPageScroll();
         }
 
         navMenuToggle.addEventListener('click', function(e) {
@@ -48,10 +64,27 @@
         }
 
         document.addEventListener('click', function(e) {
-            if (!nav.contains(e.target)) {
+            if (
+                nav.classList.contains('mobile-menu-open') &&
+                !nav.contains(e.target)
+            ) {
                 closeMobileMenu();
             }
         });
+
+        document.addEventListener(
+            'touchmove',
+            function(e) {
+                if (
+                    !document.body.classList.contains('mobile-menu-open') ||
+                    menu.contains(e.target)
+                ) {
+                    return;
+                }
+                e.preventDefault();
+            },
+            { passive: false }
+        );
 
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
