@@ -1,0 +1,12 @@
+name = "Enrell"
+license = "MIT"
+licenselink = "https://github.com/enrell/enrell.github.io/blob/main/LICENSE"
+description = "Custom Hugo theme for enrell.github.io"
+homepage = "https://enrell.github.io/"
+tags = ["blog", "dark", "light", "responsive", "multilingual"]
+features = ["search", "toc", "comments", "multilingual"]
+min_version = "0.146.0"
+
+[author]
+  name = "enrell"
+  homepage = "https://github.com/enrell"

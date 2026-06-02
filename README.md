@@ -1,6 +1,6 @@
 # My Blog
 
-A personal blog built with [Hugo](https://gohugo.io/) and the [LoveIt](https://github.com/dillonzq/LoveIt) theme.
+A personal blog built with [Hugo](https://gohugo.io/) and the custom [enrell](themes/enrell) theme.
 
 ## Setup
 

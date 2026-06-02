@@ -80,8 +80,10 @@
                     </span>
                 </button>
                 <ul class="lang-dropdown-menu">
-                    {{- range site.Languages -}}
-                        {{- $langItem := . -}}
+                    {{- $langSites := where hugo.Sites "Version.IsDefault" true -}}
+                    {{- $langSites = where $langSites "Role.IsDefault" true -}}
+                    {{- range $langSites -}}
+                        {{- $langItem := .Language -}}
                         {{- $href := printf "/%s/" $langItem.Lang | relURL -}}
                         {{- range $page.AllTranslations -}}
                             {{- if eq .Lang $langItem.Lang -}}

@@ -4,5 +4,9 @@
 <script src="{{ $langDetectorJS.RelPermalink }}" integrity="{{ $langDetectorJS.Data.Integrity }}" crossorigin="anonymous" defer></script>
 <script src="{{ $langDropdownJS.RelPermalink }}" integrity="{{ $langDropdownJS.Data.Integrity }}" crossorigin="anonymous" defer></script>
 
-<!-- Cloudflare Web Analytics -->
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "b9d92c55a0474f36b18d702ebe125c73"}'></script>
+{{- /* Skip during `hugo server` (avoids ERR_BLOCKED_BY_CLIENT in local dev). */ -}}
+{{- with site.Params.cloudflareAnalytics.token }}
+{{- if not hugo.IsServer }}
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ . }}"}'></script>
+{{- end }}
+{{- end }}

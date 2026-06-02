@@ -1,6 +1,6 @@
 baseURL: "https://enrell.github.io/"
 title: "Enrell's Blog"
-theme: "PaperMod"
+theme: "enrell"
 pagination:
   pagerSize: 5
 
@@ -97,7 +97,7 @@ params:
   env: production
   title: "Enrell's Blog"
   description: "Developer, Creator, Open Source Enthusiast - Building cool things with code"
-  keywords: [Blog, Portfolio, PaperMod]
+  keywords: [Blog, Portfolio]
   author: enrell
   images: ["/images/og-image.svg"]
   DateFormat: "January 2, 2006"
@@ -196,6 +196,9 @@ params:
   seo:
     image: "/images/og-image.svg"
     thumbnailUrl: "/images/og-image.svg"
+
+  cloudflareAnalytics:
+    token: "b9d92c55a0474f36b18d702ebe125c73"
 
   cover:
     hidden: false
