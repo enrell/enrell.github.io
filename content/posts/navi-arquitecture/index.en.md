@@ -280,3 +280,5 @@ If you're building with LLMs, I'd love to hear your war stories. What architectu
 Hit me up in the comments, on [X](https://x.com/enrellsan) or [Discord](https://discord.gg/eNsMFGZU). And if you're curious about navi-agent's progress, the [GitHub repo](https://github.com/enrell/navi) is where all the messy experimentation happens in public (there's no code yet, but soon).
 
 Remember: infrastructure survives bubbles. Hype doesn't. Build the former.
+
+> See you in the Wired.

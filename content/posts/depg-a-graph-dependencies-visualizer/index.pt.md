@@ -75,4 +75,4 @@ Quando criamos as próprias formas ágeis de podermos observar os detalhes desta
 
 Verifiquem com os códigos de portas sempre abertas; testem rodar na base gigante dos seus trabalhos codificados – o local com os traços das estruturas se parecem hoje com bairros projetados logicamente organizados de prédios conectados bem ajustados ali? Ou aquilo mais já parece uma tempestade sem fim e de muito caos amarrado sem direção ali?
 
-See you in the The Wired.
+> See you in the Wired.

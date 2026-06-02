@@ -324,4 +324,4 @@ The [GitHub repo](https://github.com/enrell/searxng-web-fetch-mcp) is open. Issu
 
 *What about you? Is there a capability your AI assistant is missing? Let me know in the comments.*
 
-> *See you in the Wired*
+> See you in the Wired.

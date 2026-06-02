@@ -163,3 +163,5 @@ Infraestrutura sobrevive a ciclos de hype.
 Então estou construindo infraestrutura primeiro.
 
 Se você também está construindo ferramentas de IA local-first, adoraria seu feedback sobre a direção de logging e a estrutura dos sprints.
+
+> See you in the Wired.

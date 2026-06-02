@@ -219,4 +219,4 @@ Issues e feature requests são bem-vindos.
 
 ---
 
-See you in the Wired.
+> See you in the Wired.

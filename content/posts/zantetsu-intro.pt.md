@@ -165,3 +165,5 @@ E se você tiver problemas, encontrar um bug ou tiver um pedido de feature — o
 *E quanto a você? Existe algum problema no seu fluxo de trabalho diário que você tem adiado para resolver? Deixe-me saber nos comentários — talvez juntos possamos construir algo incrível.*
 
 *Além disso, se você achou isso útil, compartilhe com outros desenvolvedores. Ajuda mais do que você imagina.*
+
+> See you in the Wired.

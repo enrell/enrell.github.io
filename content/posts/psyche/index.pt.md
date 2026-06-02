@@ -165,4 +165,5 @@ O sonho é ambicioso. A montanha é alta. Mas tô olhando pra esses nomes de arq
 
 Cansei de esperar.
 
-Nos vemos na Wired.
+> See you in the Wired.
+

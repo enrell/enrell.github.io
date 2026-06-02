@@ -165,3 +165,5 @@ And if you run into issues, find a bug, or have a feature request — the [GitHu
 *What about you? Is there a problem in your daily workflow that you've been putting off solving? Let me know in the comments — maybe together we can build something awesome.*
 
 *Also, if you found this useful, share it with fellow developers. It helps more than you know.*
+
+> See you in the Wired.

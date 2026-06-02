@@ -163,3 +163,5 @@ Infrastructure survives hype cycles.
 So I’m building infrastructure first.
 
 If you’re building local-first AI tooling too, I’d love your feedback on the logging direction and sprint structure.
+
+> See you in the Wired.

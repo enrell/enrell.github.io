@@ -280,3 +280,5 @@ Se você está construindo com LLMs, eu adoraria ouvir suas histórias de trinch
 Me dê um toque nos comentários, no [X](https://x.com/enrellsan) ou no [Discord](https://discord.gg/eNsMFGZU). E se você estiver curioso sobre o progresso do navi-agent, o [repositório no GitHub](https://github.com/enrell/navi) é onde toda a experimentação bagunçada acontece em público (ainda não há código lá, mas em breve terá).
 
 Lembre-se: a infraestrutura sobrevive a bolhas. O hype não.
+
+> See you in the Wired.

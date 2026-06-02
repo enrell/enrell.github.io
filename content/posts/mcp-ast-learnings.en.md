@@ -103,3 +103,5 @@ The project is still in its early stages, but I hope to make it a powerful tool 
 I hope you found this post useful, and I look forward to sharing more learnings with you in the future. If you have any questions or suggestions, feel free to reach out to me on [X](https://x.com/enrellsan) or [Discord](https://discord.com/users/enrell).
 
 If you want to contribute to the project, feel free to open an issue on the [GitHub repository](https://github.com/enrell/ast-mcp).
+
+> See you in the Wired.

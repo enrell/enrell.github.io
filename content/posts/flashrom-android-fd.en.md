@@ -321,4 +321,4 @@ Sometimes the best code comes from desperation at 11 PM with no computer and a b
 
 *If you're working on hardware recovery on Android or have questions about the patch, drop a comment below. And if this post helped you, share it — someone out there is probably staring at a bricked board right now with only a phone in their pocket.*
 
-> *See you in the Wired*
+> See you in the Wired.

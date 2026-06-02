@@ -79,4 +79,4 @@ If we have the tooling to easily visualize and audit the roots of our software, 
 
 You can check out the source code and try it yourself. Run it on your biggest project and tell me—does your dependency graph look like a well-architected city, or a chaotic, tangled mess?
 
-See you in the The Wired.
+> See you in the Wired.

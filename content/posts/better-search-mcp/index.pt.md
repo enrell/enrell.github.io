@@ -309,4 +309,4 @@ O [repositório no GitHub](https://github.com/enrell/better-search) está aberto
 
 *Se achou útil, compartilha com outros desenvolvedores. Ajuda mais do que você imagina.*
 
-See you in the Wired.
+> See you in the Wired.

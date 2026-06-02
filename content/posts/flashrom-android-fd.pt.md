@@ -321,4 +321,4 @@ Minha X99 está viva. Meu celular provou seu valor como ferramenta de recuperaç
 
 *Se você está trabalhando na recuperação de hardware via Android ou tem perguntas sobre o patch, deixe um comentário abaixo. E se este post te ajudou, compartilhe — alguém por aí pode estar com uma placa inutilizada agora mesmo tendo apenas um celular no bolso.*
 
-> *See you in the Wired*
+> See you in the Wired.

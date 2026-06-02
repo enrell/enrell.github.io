@@ -94,4 +94,4 @@ O roadmap ainda está sendo desenhado, e o core está sendo desenvolvido. A idei
 
 Em breve eu solto o repositório no GitHub para quem quiser dar uma olhada no código (ou dar uns pitacos nas PRs). Até lá, seguimos codando!
 
--- Present day, present time! hahahahaha
+> See you in the Wired.

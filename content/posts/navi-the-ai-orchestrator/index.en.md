@@ -93,4 +93,4 @@ The roadmap is still being drawn up, and the core is currently under development
 
 I'll be dropping the GitHub repository soon for anyone who wants to take a look at the code (or chip in on the PRs). Until then, we keep coding!
 
--- Present day, present time! hahahahaha
+> See you in the Wired.

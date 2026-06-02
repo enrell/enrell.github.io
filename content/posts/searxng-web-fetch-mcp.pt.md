@@ -324,4 +324,4 @@ O [repositório no GitHub](https://github.com/enrell/searxng-web-fetch-mcp) est�
 
 *E você? Existe alguma capacidade que está faltando no seu assistente de IA? Deixe-me saber nos comentários.*
 
-> *Nos vemos na Wired*
+> See you in the Wired.

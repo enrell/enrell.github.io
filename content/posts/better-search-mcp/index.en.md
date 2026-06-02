@@ -309,4 +309,4 @@ The [GitHub repo](https://github.com/enrell/better-search) is open. Issues and P
 
 *Also, if you found this useful, share it with fellow developers. It helps more than you know.*
 
-See you in the Wired.
+> See you in the Wired.
