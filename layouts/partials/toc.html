@@ -1,13 +1,8 @@
-{{- $tocOpen := .Param "TocOpen" | default site.Params.tocopen | default true -}}
 {{- with .TableOfContents }}
-<nav class="post-toc" aria-label="{{ i18n "toc" | default "Table of Contents" }}">
-  <details {{ if $tocOpen }}open{{ end }}>
-    <summary class="post-toc-summary">
-      <span class="post-toc-title">{{ i18n "toc" | default "Table of Contents" }}</span>
-    </summary>
-    <div class="post-toc-inner">
-      {{ . }}
-    </div>
-  </details>
+<nav class="post-toc">
+  <p class="post-toc-title">{{ i18n "toc" | default "Table of Contents" }}</p>
+  <div class="post-toc-inner">
+    {{ . }}
+  </div>
 </nav>
 {{- end }}
