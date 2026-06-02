@@ -129,3 +129,9 @@
         max-height: min(50vh, 280px);
     }
 }
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .header-search {
+        width: clamp(108px, 13vw, 128px);
+    }
+}

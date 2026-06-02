@@ -10,16 +10,16 @@
 
 .nav {
     display: grid;
-    /* Equal side tracks keep the menu centered; mins reserve space for logo + search/icons */
-    grid-template-columns: minmax(9rem, 1fr) auto minmax(13rem, 1fr);
+    /* Equal side tracks keep the menu centered on the viewport. */
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     grid-template-areas: "start menu end";
     align-items: center;
-    column-gap: clamp(16px, 2.5vw, 32px);
+    column-gap: clamp(24px, 4vw, 56px);
     width: 100%;
-    max-width: calc(var(--nav-width) + var(--gap) * 2);
+    max-width: none;
     min-height: var(--header-height);
     margin-inline: auto;
-    padding-inline: clamp(var(--gap), 4vw, calc(var(--gap) * 1.75));
+    padding-inline: clamp(var(--gap), 3.5vw, calc(var(--gap) * 2));
 }
 
 .nav-toolbar {
@@ -28,7 +28,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 8px;
+    gap: 12px;
     min-width: 0;
     max-width: 100%;
 }
@@ -136,8 +136,8 @@
     padding: 0;
     gap: clamp(14px, 2vw, 32px);
     width: max-content;
-    max-width: calc(100% - 1rem);
-    overflow: hidden;
+    max-width: 100%;
+    overflow: visible;
     word-break: keep-all;
     white-space: nowrap;
 }
@@ -173,7 +173,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 4px;
+    gap: 8px;
     flex-shrink: 0;
 }
 
@@ -433,6 +433,24 @@ ul.lang-switch {
         width: 100%;
         padding: 14px 0;
         white-space: normal;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .nav {
+        column-gap: clamp(18px, 3vw, 28px);
+    }
+
+    .nav-toolbar {
+        gap: 8px;
+    }
+
+    .nav-actions {
+        gap: 4px;
+    }
+
+    .current-lang {
+        display: none;
     }
 }
 

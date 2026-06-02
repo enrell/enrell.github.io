@@ -22,7 +22,7 @@
             {{- range site.Menus.main }}
             {{- if eq .Identifier "search" }}{{ continue }}{{ end }}
             {{- $menu_item_url := (cond (strings.HasSuffix .URL "/") .URL (printf "%s/" .URL) ) | relLangURL }}
-            {{- $page_url:= $currentPage.Permalink | relLangURL }}
+            {{- $page_url:= $currentPage.RelPermalink }}
             {{- $is_search := eq (site.GetPage .KeyName).Layout `search` }}
             <li>
                 <a href="{{ .URL | relLangURL }}" title="{{ .Title | default .Name }} {{- cond $is_search (" (Alt + /)" | safeHTMLAttr) ("" | safeHTMLAttr ) }}"
@@ -90,7 +90,7 @@
                         {{- $href := printf "/%s/" $langItem.Lang | relURL -}}
                         {{- range $page.AllTranslations -}}
                             {{- if eq .Lang $langItem.Lang -}}
-                                {{- $href = .Permalink -}}
+                                {{- $href = .RelPermalink -}}
                             {{- end -}}
                         {{- end -}}
                         <li>
