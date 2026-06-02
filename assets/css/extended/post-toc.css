@@ -1,27 +1,27 @@
-/* Sidebar table of contents on post pages */
+/* Table of contents — separate column from article body */
 
-body:not(.list) .main {
-    max-width: calc(var(--nav-width) + var(--gap) * 2);
+.post-page {
+    width: 100%;
 }
 
-.post-single--with-toc .post-header,
-.post-single--with-toc .post-layout {
-    max-width: 100%;
-}
-
-.post-layout {
+.post-page--with-toc {
     display: grid;
-    grid-template-columns: minmax(200px, 240px) minmax(0, 1fr);
-    gap: clamp(20px, 3vw, 40px);
+    grid-template-columns: minmax(200px, 240px) minmax(0, var(--main-width));
+    justify-content: center;
+    gap: clamp(24px, 4vw, 48px);
     align-items: start;
-    margin-top: var(--content-gap);
+    max-width: calc(var(--nav-width) + var(--gap) * 2);
+    margin-inline: auto;
 }
 
-.post-layout--no-toc {
-    display: block;
+.post-page--with-toc .post-single {
+    min-width: 0;
+    max-width: var(--main-width);
+    width: 100%;
+    margin-inline: 0;
 }
 
-.post-toc-sidebar {
+.post-toc-column {
     position: sticky;
     top: calc(var(--header-height) + 1.25rem);
     align-self: start;
@@ -31,21 +31,13 @@ body:not(.list) .main {
     padding-inline-end: 4px;
 }
 
-.post-toc-sidebar::-webkit-scrollbar {
+.post-toc-column::-webkit-scrollbar {
     width: 6px;
 }
 
-.post-toc-sidebar::-webkit-scrollbar-thumb {
+.post-toc-column::-webkit-scrollbar-thumb {
     background: var(--tertiary);
     border-radius: var(--radius-sm);
-}
-
-.post-main {
-    min-width: 0;
-}
-
-.post-main .post-content {
-    margin-top: 0;
 }
 
 .post-toc {
@@ -164,6 +156,11 @@ body:not(.list) .main {
     background: color-mix(in srgb, var(--border) 65%, transparent);
 }
 
+/* Wider main only when TOC column is present */
+.main:has(.post-page--with-toc) {
+    max-width: calc(var(--nav-width) + var(--gap) * 2);
+}
+
 /* Offset for fixed header when jumping to anchors */
 .post-content h1,
 .post-content h2,
@@ -175,26 +172,24 @@ body:not(.list) .main {
 }
 
 @media (max-width: 960px) {
-    .post-layout {
+    .post-page--with-toc {
         grid-template-columns: 1fr;
+        max-width: calc(var(--main-width) + var(--gap) * 2);
         gap: var(--content-gap);
     }
 
-    .post-toc-sidebar {
+    .post-toc-column {
         position: static;
         max-height: none;
         overflow: visible;
         order: -1;
+        max-width: var(--main-width);
+        margin-inline: auto;
+        width: 100%;
     }
 
     .post-toc-inner {
         max-height: 12rem;
         overflow-y: auto;
-    }
-}
-
-@media (max-width: 640px) {
-    body:not(.list) .main {
-        max-width: calc(var(--main-width) + var(--gap) * 2);
     }
 }
