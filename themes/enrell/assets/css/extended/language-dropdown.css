@@ -9,15 +9,15 @@
 }
 
 .nav {
-    display: flex;
-    flex-wrap: nowrap;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    grid-template-areas: "brand menu end";
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
+    column-gap: 16px;
+    width: 100%;
     min-height: var(--header-height);
-    max-width: calc(var(--nav-width) + var(--gap) * 2);
     margin-inline: auto;
-    padding: 0 var(--gap);
+    padding: 0 clamp(12px, 2.5vw, var(--gap));
 }
 
 .nav a {
@@ -26,6 +26,8 @@
 }
 
 .nav-brand {
+    grid-area: brand;
+    justify-self: start;
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -110,16 +112,18 @@
 }
 
 #menu {
+    grid-area: menu;
+    justify-self: center;
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
-    flex: 1 1 auto;
     list-style: none;
     margin: 0;
     padding: 0;
     gap: clamp(18px, 2.8vw, 40px);
-    min-width: 0;
+    width: max-content;
+    max-width: 100%;
     overflow: hidden;
     word-break: keep-all;
     white-space: nowrap;
@@ -153,6 +157,8 @@
 }
 
 .nav-end {
+    grid-area: end;
+    justify-self: end;
     display: inline-flex;
     align-items: center;
     justify-content: flex-end;
