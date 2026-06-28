@@ -18,6 +18,7 @@ languages:
     weight: 1
     title: "Enrell's Blog"
     params:
+      languageLabel: "English"
       description: "Developer, Creator, Open Source Enthusiast - Building cool things with code"
       profileMode:
         enabled: true
@@ -49,6 +50,7 @@ languages:
     weight: 2
     title: "Blog do Enrell"
     params:
+      languageLabel: "Português"
       description: "Desenvolvedor, Criador, Entusiasta Open Source"
       profileMode:
         enabled: true

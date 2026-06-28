@@ -7,8 +7,8 @@
     {{- range .Translations }}
     <li>
         <a href="{{ .RelPermalink }}">
-            {{- if (and site.Params.displayFullLangName (.Language.Label)) }}
-            {{- .Language.Label | emojify -}}
+            {{- if (and site.Params.displayFullLangName (.Language.Params.languageLabel)) }}
+            {{- .Language.Params.languageLabel | emojify -}}
             {{- else }}
             {{- .Lang | title -}}
             {{- end -}}

@@ -75,8 +75,8 @@
                         <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
                     </svg>
                     <span class="current-lang">
-                        {{- if (and site.Params.displayFullLangName $page.Language.Label) -}}
-                            {{- $page.Language.Label | emojify -}}
+                        {{- if (and site.Params.displayFullLangName $page.Language.Params.languageLabel) -}}
+                            {{- $page.Language.Params.languageLabel | emojify -}}
                         {{- else -}}
                             {{- $page.Lang | upper -}}
                         {{- end -}}
@@ -97,10 +97,10 @@
                             <a href="{{ $href }}"
                                hreflang="{{ $langItem.Lang }}"
                                lang="{{ $langItem.Lang }}"
-                               title="{{ $langItem.Label | default $langItem.Lang }}"
+                               title="{{ $langItem.Params.languageLabel | default $langItem.Lang }}"
                                class="{{- if eq $langItem.Lang $page.Lang }} active{{- end }}">
-                                {{- if (and site.Params.displayFullLangName $langItem.Label) -}}
-                                    {{- $langItem.Label | emojify -}}
+                                {{- if (and site.Params.displayFullLangName $langItem.Params.languageLabel) -}}
+                                    {{- $langItem.Params.languageLabel | emojify -}}
                                 {{- else -}}
                                     {{- $langItem.Lang | upper -}}
                                 {{- end -}}
