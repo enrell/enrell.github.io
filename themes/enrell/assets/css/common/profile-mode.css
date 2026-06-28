@@ -21,6 +21,14 @@
     border-radius: 50%;
 }
 
+.home-layout {
+    display: block;
+}
+
+.home-feed {
+    min-width: 0;
+}
+
 .buttons {
     flex-wrap: wrap;
     max-width: 400px;
@@ -203,6 +211,112 @@
     gap: 8px;
     color: var(--secondary);
     font-size: 12px;
+}
+
+@media (min-width: 1120px) {
+    .main.home-main {
+        max-width: min(1380px, calc(100vw - (var(--gap) * 2)));
+        padding-top: 30px;
+    }
+
+    .home-layout {
+        display: grid;
+        grid-template-columns: minmax(340px, 390px) minmax(0, var(--main-width));
+        align-items: start;
+        justify-content: center;
+        column-gap: clamp(64px, 6vw, 104px);
+    }
+
+    .home-sidebar .profile,
+    .main .home-sidebar .profile {
+        display: block;
+        min-height: 0;
+        text-align: left;
+    }
+
+    .home-sidebar .profile .profile_inner {
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .home-sidebar .profile img {
+        width: 96px;
+        height: 96px;
+        align-self: center;
+        margin-bottom: 8px;
+    }
+
+    .home-sidebar .profile h1,
+    .home-sidebar .profile_inner > span {
+        text-align: center;
+    }
+
+    .home-sidebar .profile h1 {
+        margin-top: 0;
+        font-size: 32px;
+        line-height: 1.1;
+    }
+
+    .home-sidebar .profile_inner > span {
+        font-size: 15px;
+        line-height: 1.45;
+    }
+
+    .home-sidebar .social-icons {
+        justify-content: center;
+    }
+
+    .home-feed {
+        padding-top: 0;
+    }
+
+    .home-sidebar .github-overview {
+        width: 100%;
+        margin-top: 16px;
+        padding: 18px;
+    }
+
+    .home-sidebar .github-overview-header,
+    .home-sidebar .github-pinned-header {
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .home-sidebar .github-overview h2 {
+        font-size: 19px;
+    }
+
+    .home-sidebar .github-summary {
+        font-size: 14px;
+    }
+
+    .home-sidebar .github-metrics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 14px;
+    }
+
+    .home-sidebar .github-metric {
+        padding: 10px;
+    }
+
+    .home-sidebar .github-metric dd {
+        font-size: 20px;
+    }
+
+    .home-sidebar .github-pinned-header {
+        margin-top: 18px;
+    }
+
+    .home-sidebar .github-pinned-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .home-sidebar .github-repo-card {
+        min-height: 0;
+        padding: 12px;
+    }
 }
 
 @media (max-width: 768px) {

@@ -1,10 +1,10 @@
 ---
-title: "I Added Voice Dictation to My Desktop Shell So I Can Stop Typing"
+title: "I Added Voice-to-Text to Noctalia Shell So I Can Stop Typing"
 date: 2026-05-29
-lastmod: 2026-05-29
+lastmod: 2026-06-28
 draft: false
 author: "enrell"
-description: "I wanted system-wide voice-to-text on Linux — not a browser app, not a cloud service, something that runs on my panel and types into whatever window is focused. So I built an ASR plugin for Noctalia powered by NVIDIA Parakeet running in Docker."
+description: "I wanted system-wide voice-to-text on Linux — not a browser app, not a cloud service, something that runs on my panel and types into whatever window is focused. So I built an ASR plugin for Noctalia Shell powered by NVIDIA Parakeet running in Docker."
 tags: ["noctalia", "asr", "rust", "python", "qml", "voice", "linux", "docker", "open-source"]
 categories: ["Programming", "Announcement"]
 
@@ -41,13 +41,13 @@ Voice-to-text on Linux is a mess.
 - **Fragmented** — some tools capture audio but don't inject text. Others inject text but don't capture audio. You end up gluing three different scripts together with duct tape
 - **Desktop-only** — GNOME has built-in dictation, but it only works in GNOME. KDE has something else. Tiling compositors? Good luck
 
-I use [Noctalia](https://github.com/NoctaliaSh/noctalia-shell) — a Wayland compositor shell built on Quickshell. It has a plugin system, a bar, panels, and desktop widgets. It doesn't have voice input.
+I use [Noctalia Shell](https://github.com/NoctaliaSh/noctalia-shell) — a Wayland compositor shell built on Quickshell. It has a plugin system, a bar, panels, and desktop widgets. It doesn't have voice input.
 
 So I built it.
 
 ## Meet Noctalia ASR
 
-**Noctalia ASR** is a plugin for Noctalia that adds system-wide voice-to-text transcription. Press `Super+R` or click the microphone icon in your bar. Speak. Press again. The transcribed text appears in whatever window you're focused on.
+**Noctalia ASR** is a plugin for Noctalia Shell that adds system-wide voice-to-text transcription. Press `Super+R` or click the microphone icon in your bar. Speak. Press again. The transcribed text appears in whatever window you're focused on.
 
 No browser. No cloud. No Electron. A Rust server in a Docker container running an ONNX model, a Python script capturing audio from PipeWire, and a QML plugin that ties it all together.
 

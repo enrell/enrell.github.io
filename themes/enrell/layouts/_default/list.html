@@ -1,7 +1,13 @@
 {{- define "main" }}
 
-{{- if (and site.Params.profileMode.enabled .IsHome) }}
-{{- partial "index_profile.html" . }}
+{{- $homeProfile := and site.Params.profileMode.enabled .IsHome }}
+
+{{- if $homeProfile }}
+<div class="home-layout">
+  <aside class="home-sidebar">
+    {{- partial "index_profile.html" . }}
+  </aside>
+  <section class="home-feed" aria-label="{{ if eq .Lang `pt` }}Posts recentes{{ else }}Recent posts{{ end }}">
 {{- end }}
 
 {{- if not .IsHome | and .Title }}
@@ -114,6 +120,11 @@
     {{- end }}
   </nav>
 </footer>
+{{- end }}
+
+{{- if $homeProfile }}
+  </section>
+</div>
 {{- end }}
 
 {{- end }}{{- /* end main */ -}}
