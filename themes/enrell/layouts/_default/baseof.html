@@ -22,6 +22,9 @@
         {{- block "main" . }}{{ end }}
     </main>
     {{ partialCached "footer.html" . .Layout .Kind (.Param "hideFooter") (.Param "ShowCodeCopyButtons") -}}
+    {{- if (.Param "comments") }}
+    <script id="dsq-count-scr" src="//enrell-github-io.disqus.com/count.js" async></script>
+    {{- end }}
 </body>
 
 </html>
