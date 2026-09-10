@@ -18,7 +18,13 @@ share:
   enable: true
 ---
 
-O primeiro commit do Matrix tinha uma TUI, um `Agent`, um `Model`, um `Tool` e até implementações chamadas `EchoTool` e `CannedModel`.
+O Matrix é um kernel experimental em Rust para compor componentes de software duradouros entre processos e máquinas. Um componente pode ser um adaptador de modelo, uma ferramenta, um serviço de memória, uma interface ou lógica comum da aplicação. O Matrix dá identidade e geração a cada instância em execução, resolve suas dependências declaradas, controla quais componentes podem chamá-la e acompanha os recursos que ela adquire.
+
+Imagine um consumidor recebendo um stream de `provider`. Enquanto o stream está aberto, o processo do provider cai e um substituto entra com o mesmo nome lógico. A maioria dos sistemas de plugins consegue dizer que `provider` existe de novo. O Matrix se preocupa com a pergunta mais difícil: este chunk ainda pertence à instância exata que foi autorizada quando a chamada começou?
+
+Essa preocupação molda todo o runtime. Componentes locais podem viver no mesmo processo ou em processos filhos supervisionados; componentes remotos se conectam por sessões gerenciadas. As aplicações mantêm seus modelos, ferramentas, memória, interfaces e regras de negócio. O Matrix fornece o mecanismo comum de identidade, dependências, autoridade, posse de recursos e ciclo de vida.
+
+Ele não começou com essa fronteira. O primeiro commit do Matrix tinha uma TUI, um `Agent`, um `Model`, um `Tool` e até implementações chamadas `EchoTool` e `CannedModel`.
 
 Dois dias depois eu apaguei tudo isso.
 
@@ -28,7 +34,7 @@ Sem o agente, sobrou a pergunta que realmente estava me incomodando.
 
 O que acontece com uma chamada quando o componente do outro lado é substituído enquanto ela está em voo?
 
-É dessa pergunta que nasceu o [Matrix](https://github.com/enrell/matrix) como ele existe hoje: um kernel experimental em Rust para compor componentes locais e remotos. Modelos, ferramentas, memória, interface e regras de negócio ficam fora dele. O Matrix cuida da parte ingrata: identidade, dependências, autoridade, recursos e ciclo de vida.
+É dessa pergunta que nasceu o [Matrix](https://github.com/enrell/matrix) como ele existe hoje.
 
 ## A Função Compilou. E Agora?
 

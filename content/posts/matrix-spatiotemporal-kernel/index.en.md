@@ -18,7 +18,13 @@ share:
   enable: true
 ---
 
-The first Matrix commit had a TUI, an `Agent`, a `Model`, a `Tool`, and even implementations named `EchoTool` and `CannedModel`.
+Matrix is an experimental Rust kernel for composing long-lived software components across process and machine boundaries. A component can be a model adapter, a tool, a memory service, a user interface, or ordinary application logic. Matrix gives each running instance an identity and a generation, resolves its declared dependencies, controls which other components may call it, and tracks the resources it acquires.
+
+Consider a consumer receiving a stream from `provider`. While that stream is open, the provider process crashes and a replacement starts under the same logical name. Most plugin systems can tell you that `provider` exists again. Matrix is concerned with the harder question: does this chunk still belong to the exact instance that was authorized when the call began?
+
+That concern shapes the whole runtime. Local components can live in the same process or in supervised child processes; remote components connect through managed sessions. Applications keep their models, tools, memory, interfaces, and business rules. Matrix supplies the common machinery for identity, dependencies, authority, resource ownership, and lifecycle.
+
+It did not start with that boundary. The first Matrix commit had a TUI, an `Agent`, a `Model`, a `Tool`, and even implementations named `EchoTool` and `CannedModel`.
 
 Two days later, I deleted all of them.
 
@@ -28,7 +34,7 @@ Without the agent, I was left with the question that had actually been bothering
 
 What happens to a call when the component on the other side is replaced while that call is in flight?
 
-That question produced [Matrix](https://github.com/enrell/matrix) as it exists today: an experimental Rust kernel for composing local and remote components. Models, tools, memory, interfaces, and business rules stay outside it. Matrix handles the unglamorous part: identity, dependencies, authority, resources, and lifecycle.
+That question produced [Matrix](https://github.com/enrell/matrix) as it exists today.
 
 ## The Function Compiled. Now What?
 
