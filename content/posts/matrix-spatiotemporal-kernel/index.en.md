@@ -7,9 +7,6 @@ description: 'Matrix started as an agent runtime. It became interesting when I d
 tags: ['rust', 'matrix', 'runtime', 'distributed-systems', 'open-source', 'architecture']
 categories: ['Rust', 'Architecture']
 draft: false
-aliases:
-  - /medium-import-matrix-clean-v3/
-  - /medium-import-matrix-clean-v4/
 toc:
   enable: true
   auto: true
