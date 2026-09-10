@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex,nofollow">
+    <title>{{ .Title }}</title>
+    <link rel="canonical" href="https://enrell.github.io/pt/posts/matrix-spatiotemporal-kernel/">
+  </head>
+  <body>
+    <article>
+      <h1>{{ .Title }}</h1>
+      {{ with site.GetPage "/posts/matrix-spatiotemporal-kernel" }}
+        {{ replaceRE `<a hidden class=anchor aria-hidden=true href=[^>]+>#</a>` "" .Content | safeHTML }}
+      {{ end }}
+    </article>
+  </body>
+</html>
