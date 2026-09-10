@@ -7,8 +7,6 @@ description: 'O Matrix começou como um runtime de agentes. Ficou interessante q
 tags: ['rust', 'matrix', 'runtime', 'distributed-systems', 'open-source', 'architecture']
 categories: ['Rust', 'Architecture']
 draft: false
-aliases:
-  - /medium-import-matrix-clean-v2/
 toc:
   enable: true
   auto: true
